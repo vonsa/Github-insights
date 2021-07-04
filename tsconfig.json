@@ -1,6 +1,21 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "importsNotUsedAsValues": "error",
+    "moduleResolution": "node",
+    "lib": ["ES2015", "dom"],
+    "types": ["svelte", "node"],
+    "baseUrl": "."
+  },
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }
