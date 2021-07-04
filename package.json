@@ -8,7 +8,20 @@
     "start": "sirv public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint ./src --ext .ts",
-    "precommit": "npm run lint"
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.ts?(x)": [
+      "eslint --max-warnings 0 --ext ts,tsx --no-ignore",
+      "sh -c 'tsc -p tsconfig.json --noEmit'"
+    ],
+    "*.js": [
+      "eslint --max-warnings 0 --ext js --no-ignore"
+    ],
+    "*.svelte": [
+      "svelte-check --fail-on-warnings --fail-on-hints",
+      "prettier --check --loglevel=warn '{libs,apps}/**/*.svelte'"
+    ]
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -24,6 +37,8 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.0.0",
     "prettier": "2.3.2",
     "prettier-plugin-svelte": "^2.3.1",
     "rollup": "^2.3.4",
