@@ -1,36 +1,19 @@
 <script lang="ts">
-  import Test from './Components/Test.svelte'
+  import Home from './Routes/Home.svelte'
+  import Router from 'svelte-spa-router'
+  import LoginResponse from './Routes/LoginResponse.svelte'
+  import Apollo from './Components/Hoc/Apollo.svelte'
+  import AutoRedirect from './Components/Hoc/AutoRedirect.svelte'
 
-  export let name: string
+  const routes = {
+    '/': Home,
+    '/login-response': LoginResponse,
+  }
 </script>
 
-<main>
-  <h1>Hello {name}!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte
-    apps.
-  </p>
-  <Test />
-</main>
-
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
+<AutoRedirect>
+  <Apollo>
+    <Router {routes} />
+  </Apollo>
+  <h1>Test</h1>
+</AutoRedirect>
