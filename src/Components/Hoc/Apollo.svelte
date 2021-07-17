@@ -18,7 +18,27 @@
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Repository: {
+          fields: {
+            stargazers: {
+              keyArgs: ['first'],
+            },
+          },
+        },
+        StargazerConnection: {
+          fields: {
+            edges: {
+              merge(existing, incoming) {
+                if (!existing) return incoming
+                return [...existing, ...incoming]
+              },
+            },
+          },
+        },
+      },
+    }),
   })
 
   setClient(client)
