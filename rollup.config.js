@@ -6,7 +6,7 @@ import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import typescript from '@rollup/plugin-typescript'
 import css from 'rollup-plugin-css-only'
-import preprocess from 'svelte-preprocess'
+import preprocess, { scss } from 'svelte-preprocess'
 import replace from '@rollup/plugin-replace'
 
 const production = !process.env.ROLLUP_WATCH
@@ -56,7 +56,11 @@ export default {
       }),
     }),
     svelte({
-      preprocess: preprocess(),
+      preprocess: preprocess([
+        scss({
+          /** options */
+        }),
+      ]),
       //   preprocess({
       //   babel: {
       //     presets: [

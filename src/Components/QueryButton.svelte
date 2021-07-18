@@ -7,6 +7,9 @@
 
   export let query: string
   export let label: string
+  export let variables: Record<string, unknown> = {}
+
+  console.log('variables', variables)
 
   let response: Promise<ApolloQueryResult<any>> | undefined
 
@@ -15,6 +18,7 @@
       query: gql`
         ${query}
       `,
+      variables: variables,
     })
   }
 
@@ -30,7 +34,8 @@
 {#if response}
   {#await response}
     <h1>Awaiting response</h1>
-  {:then}
+  {:then data}
     <h1>Got response</h1>
+    <slot {data} />
   {/await}
 {/if}
