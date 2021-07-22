@@ -1,12 +1,4 @@
-export const QUERY_USER_BASIC = `
-    query UserBasic($user: String!){
-        user(login: $user){
-
-        }
-    }
-`
-
-const USER_INFO_FRAGMENT = `
+const infoFragment = `
   fragment UserInfo on User {
     name
     login
@@ -17,7 +9,7 @@ const USER_INFO_FRAGMENT = `
   }
 `
 
-const CONTRIBUTIONS_BY_REPOSITORY = `
+const contributionsByRepository = `
     contributions {
       totalCount
     }
@@ -27,39 +19,42 @@ const CONTRIBUTIONS_BY_REPOSITORY = `
     }
 `
 
-const USER_CONTRIBUTION_COUNTS_FRAGMENT = `
+const contributionFragment = `
   fragment ContributionCounts on User {
     followers {
       totalCount
     }
-    repositories(first: 100) {
+    repositories(first: $firstRepos, orderBy: { direction: DESC, field: STARGAZERS }, after: $cursor) {
       totalCount
       nodes {
         name
         stargazerCount
       }
+      pageInfo {
+        endCursor
+      }
     }
     contributionsCollection {
       pullRequestContributionsByRepository {
-        ${CONTRIBUTIONS_BY_REPOSITORY}
+        ${contributionsByRepository}
       }
       pullRequestReviewContributionsByRepository {
-        ${CONTRIBUTIONS_BY_REPOSITORY}
+        ${contributionsByRepository}
       }
       commitContributionsByRepository {
-        ${CONTRIBUTIONS_BY_REPOSITORY}
+        ${contributionsByRepository}
       }
       issueContributionsByRepository {
-        ${CONTRIBUTIONS_BY_REPOSITORY}
+        ${contributionsByRepository}
       }
     }
   }
 `
 
 export const QUERY_USER = `
-  ${USER_INFO_FRAGMENT}
-  ${USER_CONTRIBUTION_COUNTS_FRAGMENT}
-  query User($user: String!) {
+  ${infoFragment}
+  ${contributionFragment}
+  query User($user: String!, $cursor: String, $firstRepos: Int = 100) {
     user(login: $user) {
         id
       ...UserInfo

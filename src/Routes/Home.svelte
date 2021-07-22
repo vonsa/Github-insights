@@ -1,17 +1,13 @@
 <script lang="ts">
-  import {
-    GET_RATE_LIMITS,
-    GET_REPOSITORY,
-    GET_REPOSITORY_V2,
-    GET_STARGAZERS,
-  } from 'src/GraphQL/queries'
   import { QUERY_USER } from 'src/GraphQL/Queries/user-queries'
-  import QueryButton from '../Components/QueryButton.svelte'
-  import Login from '../Components/Login.svelte'
-  import PaginatedQuery from '../Components/Hoc/PaginatedQuery.svelte'
   import User from '../Components/User.svelte'
   import type { UserInfo } from 'src/types/User/UserInfo'
-  import ShowcaseCard from '../Components/ShowcaseCard.svelte'
+  import RankedItems from '../Components/RankedItems.svelte'
+  import Spinner from '../Components/UI/Spinner.svelte'
+  import Tabs from '../Components/UI/Tabs.svelte'
+  import { query } from 'src/GraphQL/apollo'
+  import { getBaseUrl } from 'src/util/url'
+  import { authenticated$, login } from 'src/stores/auth'
 
   function getUserInfo(user: any): UserInfo {
     const { name, login, createdAt, avatarUrl, company, websiteUrl } = user
@@ -25,29 +21,37 @@
       websiteUrl,
     }
   }
+
+  function getRankedItems(repositories: any) {
+    return repositories.nodes.map((repository: any) => ({
+      label: repository.name,
+      count: repository.stargazerCount,
+    }))
+  }
 </script>
 
 <main>
-  <h1>Hello there!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte
-    apps.
-  </p>
-  <PaginatedQuery />
-  <ShowcaseCard icon="bottle" label="test" count={10} />
-  <QueryButton query={GET_REPOSITORY('vonsa', 'dragimate')} label="Fetch repo" />
-  <QueryButton query={GET_REPOSITORY_V2('vonsa', 'dragimate')} label="Fetch repo v2" />
-  <QueryButton query={GET_RATE_LIMITS} label="Get rate limits" />
-  <QueryButton query={QUERY_USER} variables={{ user: 'vonsa' }} label="Get user" let:data>
-    {#if data}
-      <User {...getUserInfo(data.data.user)} />
+  <Tabs tabs={['First label', 'Second label', 'Third label']} let:activeTab let:next>
+    {#if activeTab === 0}
+      {#if !$authenticated$}
+        <h1>Not authorized</h1>
+        {login(getBaseUrl())}
+      {:else}
+        {next()}
+      {/if}
     {/if}
-  </QueryButton>
-  <QueryButton
-    query={GET_STARGAZERS({ repo: { owner: 'facebook', name: 'flow' }, first: 10 })}
-    label="Get stargazers"
-  />
-  <Login />
+    {#if activeTab === 1}
+      {#await query(QUERY_USER, { user: 'ljharb', firstRepos: 3 })}
+        <Spinner />
+      {:then { data: { user } }}
+        <User {...getUserInfo(user)} />
+        <RankedItems items={getRankedItems(user.repositories)} />
+      {/await}
+    {/if}
+    {#if activeTab === 2}
+      <Spinner />
+    {/if}
+  </Tabs>
 </main>
 
 <style>

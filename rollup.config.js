@@ -8,6 +8,8 @@ import typescript from '@rollup/plugin-typescript'
 import css from 'rollup-plugin-css-only'
 import preprocess, { scss } from 'svelte-preprocess'
 import replace from '@rollup/plugin-replace'
+import scssPlugin from 'rollup-plugin-scss'
+import { babel } from '@rollup/plugin-babel'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -47,43 +49,25 @@ export default {
       ? replace({ 'process.env.NODE_ENV': JSON.stringify('production') })
       : replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
     replace({
-      // stringify the object
-      process: JSON.stringify({
-        env: {
-          isProd: production,
-          ...config().parsed, // attached the .env config
-        },
+      'process.env': JSON.stringify({
+        isProd: production,
+        ...config().parsed, // attached the .env config
       }),
     }),
     svelte({
       preprocess: preprocess([
         scss({
-          /** options */
+          /* eslint-disable global-require */
+          includePaths: ['src', 'node_modules'],
+          /* eslint-enable global-require */
         }),
       ]),
-      //   preprocess({
-      //   babel: {
-      //     presets: [
-      //       [
-      //         '@babel/preset-env',
-      //         {
-      //           loose: true,
-      //           // No need for babel to resolve modules
-      //           modules: false,
-      //           targets: {
-      //             // ! Very important. Target es6+
-      //             esmodules: true,
-      //           },
-      //         },
-      //       ],
-      //     ],
-      //   },
-      // })
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
       },
     }),
+    scssPlugin(),
     // we'll extract any component CSS out into
     // a separate file - better for performance
     css({ output: 'bundle.css' }),
@@ -98,6 +82,7 @@ export default {
       dedupe: ['svelte'],
     }),
     commonjs(),
+    babel({ babelHelpers: 'bundled' }),
     typescript({
       sourceMap: !production,
       inlineSources: !production,

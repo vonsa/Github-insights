@@ -1,56 +1,45 @@
-// body {
-//   font-size: 1.6rem;
-//   font-weight: 400;
-//   font-family: var(--font-primary);
-//   color: var(--color-font-primary);
-// }
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-family: $font-primary;
+  color: $font-primary-color;
+}
 
-// // @font-face {
-// //   font-family: Ubuntu;
-// //   src: "https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?(.');";
-// // }
+p,
+label,
+ul {
+  font-family: $font-secondary;
+}
 
-// :root {
-//   // Declare fonts
-//   --font-primary: 'Ubuntu', sans-serif;
-//   --font-secondary: 'Roboto', sans-serif;
-// }
+/*
+    Heading utility classes
+  */
 
-// p,
-// label,
-// ul {
-//   font-family: var(--font-secondary);
-// }
+.heading--primary {
+  font-size: 5rem;
+}
 
-// /*
-//     Heading utility classes
-//   */
+.heading--secondary {
+  font-size: 3.2rem;
+}
 
-// .heading--primary {
-//   font-size: 5rem;
-// }
+.heading--tertiary {
+  font-size: 2.6rem;
+}
 
-// .heading--secondary {
-//   font-size: 3.2rem;
-// }
+.heading--quad {
+  font-family: $font-secondary;
+  font-size: 2rem;
+}
 
-// .heading--tertiary {
-//   font-size: 2.6rem;
-// }
+/*
+    font-weight utility classes
+  */
 
-// .heading--quad {
-//   font-family: var(--font-secondary);
-//   font-size: 2rem;
-// }
+.weight--light {
+  font-weight: 400;
+}
 
-// /*
-//     font-weight utility classes
-//   */
-
-// .weight--light {
-//   font-weight: 400;
-// }
-
-// .weight--bold {
-//   font-weight: 700;
-// }
+.weight--bold {
+  font-weight: 700;
+}

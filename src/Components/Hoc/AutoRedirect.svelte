@@ -1,15 +1,26 @@
 <script lang="ts">
   import qs from 'qs'
   import { getBaseUrl } from 'src/util/url'
+  import { afterUpdate } from 'svelte'
 
-  const params = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+  let passed = false
 
-  if (params.redirect && typeof params.redirect === 'string') {
-    const { redirect } = params
-    delete params.redirect
+  const params =
+    window.location.search && qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-    window.location.href = `${getBaseUrl()}#/${redirect}?${qs.stringify(params)}`
+  if (!window.location.hash) {
+    window.location.href = `${getBaseUrl()}#/${params && '?' + qs.stringify(params)}`
+  } else {
+    passed = true
   }
+
+  afterUpdate(() => {
+    if (window.location.hash) {
+      passed = true
+    }
+  })
 </script>
 
-<slot />
+{#if passed}
+  <slot />
+{/if}

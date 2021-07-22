@@ -38,12 +38,6 @@
     variables: { cursor: null },
   }
 
-  $: if (query) {
-    query.subscribe((response) => {
-      console.log('response', response)
-    })
-  }
-
   function fetchMore() {
     const cursor = query.getLastResult().data.repository.stargazers.pageInfo.endCursor
 

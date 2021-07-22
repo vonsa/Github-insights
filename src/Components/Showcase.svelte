@@ -5,10 +5,11 @@
 </script>
 
 <script lang="ts">
+  import ShowcaseCardComponent from './ShowcaseCard.svelte'
+
   export let cards: ShowcaseCards
 </script>
 
-<!-- dummy setup for now -->
 {#each cards as card}
-  <h1>{card}</h1>
+  <ShowcaseCardComponent {...card} />
 {/each}

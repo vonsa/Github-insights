@@ -2,6 +2,9 @@
 
 const iconsConfig = {
   bottle: 'bottle.svg',
+  'rank-1': 'rank-1.svg',
+  'rank-2': 'rank-2.svg',
+  'rank-3': 'rank-3.svg',
 }
 
 export const icons = Object.entries(iconsConfig)
