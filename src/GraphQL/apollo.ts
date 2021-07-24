@@ -1,11 +1,11 @@
 import { ApolloClient, ApolloLink, InMemoryCache, HttpLink, gql, from } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { logout } from 'src/stores/auth'
+import { logout, token$ } from 'src/stores/auth'
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
 
 const authLink = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem('auth_token')
+  const token = token$.getValue()
 
   operation.setContext({
     headers: {

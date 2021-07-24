@@ -1,51 +1,51 @@
-import { querystring } from 'svelte-spa-router'
 import qs from 'qs'
 import axios from 'axios'
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
-import { filter, map, repeatWhen, takeUntil } from 'rxjs/operators'
+import { filter, repeatWhen, takeUntil } from 'rxjs/operators'
+import { getUrlWithoutParam } from 'src/util/url'
+import { querystring$, watchParam } from './searchParams'
 
-const login$ = new Subject()
-const querystring$ = new Subject<string | undefined>()
+const tryLogin$ = new Subject()
+const code$ = watchParam('code')
+const token$ = new BehaviorSubject(localStorage.getItem('auth_token'))
 
-export const authenticated$ = new BehaviorSubject(!!localStorage.getItem('auth_token'))
-
-export function login(redirectUrl: string = window.location.href) {
-  login$.next(redirectUrl)
+function login(redirectUrl: string = window.location.href) {
+  tryLogin$.next(redirectUrl)
 }
 
-export function logout() {
-  authenticated$.next(false)
+function logout() {
+  token$.next(null)
   localStorage.removeItem('auth_token')
 }
 
-combineLatest([
-  login$,
-  querystring$.pipe(
-    map((querystring) => {
-      return querystring && qs.parse(querystring).code
-    }),
-  ),
-])
+code$.pipe(filter((code) => !!code)).subscribe((code) => {
+  axios
+    .get(`http://localhost:9999/authenticate/${code}`)
+    .then((response) => {
+      localStorage.setItem('auth_token', response.data.token)
+      token$.next(response.data.token)
+    })
+    .catch(() => {
+      localStorage.removeItem('auth_token')
+    })
+})
+
+combineLatest([token$, querystring$]).subscribe(([token, querystring]) => {
+  const parsedQuerystring = querystring && qs.parse(querystring)
+  if (token && parsedQuerystring && 'code' in parsedQuerystring) {
+    window.location.href = getUrlWithoutParam('code')
+  }
+})
+
+combineLatest([tryLogin$, code$])
   .pipe(
-    takeUntil(authenticated$.pipe(filter((authenticated) => !!authenticated))),
-    repeatWhen(() => authenticated$.pipe(filter((authenticated) => !authenticated))),
+    takeUntil(token$.pipe(filter((token) => !!token))),
+    repeatWhen(() => token$.pipe(filter((token) => !token))),
   )
   .subscribe(([redirectUrl, code]) => {
-    if (code) {
-      axios
-        .get(`http://localhost:9999/authenticate/${code}`)
-        .then((response) => {
-          localStorage.setItem('auth_token', response.data.token)
-          authenticated$.next(true)
-        })
-        .catch(() => {
-          localStorage.removeItem('auth_token')
-        })
-    } else {
+    if (!code) {
       window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.CLIENT_ID}&type=user_agent&redirect_url=${redirectUrl}`
     }
   })
 
-querystring.subscribe((querystring) => {
-  querystring$.next(querystring)
-})
+export { token$, login, logout }

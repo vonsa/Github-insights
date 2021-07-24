@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { QUERY_USER } from 'src/GraphQL/Queries/user-queries'
   import User from '../Components/User.svelte'
   import type { UserInfo } from 'src/types/User/UserInfo'
   import RankedItems from '../Components/RankedItems.svelte'
-  import Spinner from '../Components/UI/Spinner.svelte'
   import Tabs from '../Components/UI/Tabs.svelte'
-  import { query } from 'src/GraphQL/apollo'
   import { getBaseUrl } from 'src/util/url'
-  import { authenticated$, login } from 'src/stores/auth'
+  import { token$, login } from 'src/stores/auth'
+  import { setParam } from 'src/stores/searchParams'
+  import QueryFromUrl from '../Components/Hoc/QueryFromUrl.svelte'
+  import ShareString from '../Components/ShareString.svelte'
 
   function getUserInfo(user: any): UserInfo {
     const { name, login, createdAt, avatarUrl, company, websiteUrl } = user
@@ -30,48 +30,34 @@
   }
 </script>
 
-<main>
-  <Tabs tabs={['First label', 'Second label', 'Third label']} let:activeTab let:next>
-    {#if activeTab === 0}
-      {#if !$authenticated$}
-        <h1>Not authorized</h1>
-        {login(getBaseUrl())}
-      {:else}
-        {next()}
-      {/if}
+<Tabs tabs={['Login', 'View data', 'Share link']} disableNextTabs let:activeTab let:next>
+  {#if activeTab === 0}
+    {#if !$token$}
+      <h3>The first step is to authenticate using Github</h3>
+      <button
+        on:click={() => {
+          login(getBaseUrl())
+        }}>Authenticate using Github</button
+      >
+    {:else}
+      {next()}
     {/if}
-    {#if activeTab === 1}
-      {#await query(QUERY_USER, { user: 'ljharb', firstRepos: 3 })}
-        <Spinner />
-      {:then { data: { user } }}
-        <User {...getUserInfo(user)} />
-        <RankedItems items={getRankedItems(user.repositories)} />
-      {/await}
-    {/if}
-    {#if activeTab === 2}
-      <Spinner />
-    {/if}
-  </Tabs>
-</main>
+  {/if}
+  {#if activeTab === 1}
+    <ShareString text={window.location.href} />
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
+    <button
+      on:click={() => {
+        setParam('query', 'QUERY_USER')
+        setParam('variables', { user: 'ljharb', firstRepos: 3 })
+      }}>set param</button
+    >
+    <QueryFromUrl let:data>
+      <User {...getUserInfo(data.data.user)} />
+      <RankedItems items={getRankedItems(data.data.user.repositories)} />
+    </QueryFromUrl>
+  {/if}
+  {#if activeTab === 2}
+    <p>tab 3</p>
+  {/if}
+</Tabs>

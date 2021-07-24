@@ -25,5 +25,4 @@
   <Apollo>
     <Router {routes} restoreScrollState={true} />
   </Apollo>
-  <h1>Test</h1>
 </AutoRedirect>

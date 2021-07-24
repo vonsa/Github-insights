@@ -6,6 +6,7 @@
   export let tabs: Tabs
   export let controls = false
   export let allowClicks = true
+  export let disableNextTabs = false
 
   let activeTab: number = 0
 
@@ -20,15 +21,16 @@
 
 <div class="tabset">
   {#each tabs as label, index}
-    <div class="tab">
+    <div class="tab" class:disabled={!!disableNextTabs && activeTab < index}>
       <input
         type="radio"
         name="tabset"
         id={`tab${index}`}
         aria-controls="marzen"
         checked={index === activeTab}
+        disabled={!!disableNextTabs && activeTab < index}
         on:click={() => {
-          if (allowClicks) {
+          if (allowClicks && (!disableNextTabs || (!!disableNextTabs && activeTab >= index))) {
             activeTab = index
           }
         }}
@@ -65,6 +67,10 @@
       @media only screen and (max-width: $media-tiny) {
         border-bottom: 1px solid #ccc;
       }
+    }
+
+    &.disabled {
+      opacity: 0.45;
     }
   }
 
