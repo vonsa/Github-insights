@@ -1,13 +1,14 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
+  import type { TooltipType } from './tooltip'
 
   export let title: string
   export let x: number
   export let y: number
   export let selector: string
+  export let type: TooltipType = 'DEFAULT'
 
   let timeout: ReturnType<typeof window.setTimeout>
-
   let tooltip: HTMLElement
 
   $: offsetHeight = tooltip && tooltip.offsetHeight
@@ -21,14 +22,14 @@
 
 <div
   bind:this={tooltip}
-  class="tooltip"
-  class:selector
+  class={`tooltip ${selector}`}
   style="left: {x + 5}px; top: {y - (offsetHeight || 0)}px"
+  class:error={type === 'ERROR'}
 >
   {title}
 </div>
 
-<style>
+<style lang="scss">
   .tooltip {
     position: fixed;
     top: 0;
@@ -39,5 +40,11 @@
     background: white;
     border-radius: 4px;
     padding: 4px;
+    pointer-events: none;
+
+    &.error {
+      background: crimson;
+      color: white;
+    }
   }
 </style>

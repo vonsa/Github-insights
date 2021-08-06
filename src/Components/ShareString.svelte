@@ -1,7 +1,6 @@
 <script lang="ts">
   import MaskedIcon from './Decoration/MaskedIcon.svelte'
-  import { tooltip } from '../use/tooltip/tooltip'
-  import { fromEvent } from 'rxjs'
+  import { tooltip$ } from '../use/tooltip/tooltip'
 
   export let text: string
 
@@ -9,16 +8,12 @@
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        // @TODO optionally combine clickEvent$ with clipboard success callback
-        console.log('success!')
+        tooltip$.next({ title: 'Copied successfully!' })
       })
       .catch((err) => {
-        console.log('Something went wrong', err)
+        console.error('Something went wrong', err)
+        tooltip$.next({ title: 'Could not copy automatically, please try it manually.' })
       })
-  }
-
-  function getTooltipEventFn(node: HTMLElement) {
-    return fromEvent(node, 'click')
   }
 </script>
 
@@ -30,8 +25,7 @@
       copy()
     }}
     class="text-container"
-    title="Testing"
-    use:tooltip={{ getEvent: getTooltipEventFn, title: 'Testing title...' }}>{text}</textarea
+    title="Testing">{text}</textarea
   >
   <button on:click={copy} class="copy-btn">
     <MaskedIcon icon="clipboard" size="small" />

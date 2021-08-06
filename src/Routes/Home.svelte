@@ -9,6 +9,7 @@
   import ShareString from '../Components/ShareString.svelte'
   import AuthenticateButton from '../Components/ProjectSpecific/AuthenticateButton.svelte'
   import MaskedIcon from '../Components/Decoration/MaskedIcon.svelte'
+  import ListWithSuggestions from '../Components/UI/ListWithSuggestions.svelte'
 
   function getUserInfo(user: any): UserInfo {
     const { name, login, createdAt, avatarUrl, company, websiteUrl } = user
@@ -31,7 +32,7 @@
   }
 </script>
 
-<Tabs tabs={['Login', 'View data', 'Share link']} let:activeTab let:next>
+<Tabs tabs={['Login', 'View data', 'Create profile', 'Share link']} let:activeTab let:next>
   {#if activeTab === 0}
     {#if !$token$}
       <h3>The first step is to authenticate using Github</h3>
@@ -66,6 +67,16 @@
     </QueryFromUrl>
   {/if}
   {#if activeTab === 2}
+    <ListWithSuggestions suggestions={['first', 'second', 'third']}>
+      <svelte:fragment slot="selected-item" let:item let:removeFromSelection>
+        <div class="selected-item">
+          <p>{item}</p>
+          <MaskedIcon icon="close" on:click={() => removeFromSelection(item)} />
+        </div>
+      </svelte:fragment>
+    </ListWithSuggestions>
+  {/if}
+  {#if activeTab === 3}
     <p>tab 3</p>
   {/if}
 </Tabs>

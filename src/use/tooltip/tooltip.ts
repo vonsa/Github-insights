@@ -1,147 +1,156 @@
-import { fromEvent, Observable, timer, combineLatest, concat } from 'rxjs'
-import { auditTime, filter, map, mapTo, repeat, switchMap, take, takeUntil } from 'rxjs/operators'
+import { fromEvent, timer, combineLatest, concat, Subject } from 'rxjs'
+import {
+  auditTime,
+  filter,
+  map,
+  mapTo,
+  repeat,
+  switchMap,
+  take,
+  takeUntil,
+  endWith,
+} from 'rxjs/operators'
 import anime from 'animejs'
+import { filterNullish } from 'src/util/filter'
 import Tooltip from './TooltipFromAction.svelte'
 
-export function tooltip(
-  node: HTMLElement,
-  {
-    getEvent,
-    title,
-    time = 3000,
-    animationDuration = 800,
-  }: {
-    getEvent: (node: HTMLElement) => Observable<any>
-    title: string
-    time?: number
-    animationDuration?: number
-  },
-) {
-  const event$ = getEvent(node)
-  const selector = 'tooltip'
+export type TooltipType = 'DEFAULT' | 'ERROR'
 
-  let tooltipComponent: Tooltip | null
-  let outAnimation: anime.AnimeInstance | undefined
-  let destroying = false
-  let cycleComplete = true
+interface TooltipConfig {
+  title: string
+  type?: TooltipType
+  time?: number
+  animationDuration?: number
+  TooltipComponent?: any
+  onComplete?: () => void
+}
 
-  const shouldShow$ = event$.pipe(
-    switchMap(() => {
-      return timer(0, time).pipe(
-        map((_, index) => !index),
-        take(2),
-      )
-    }),
-    repeat(),
-  )
+export const tooltip$ = new Subject<TooltipConfig>()
 
-  const show$ = shouldShow$.pipe(filter((show) => !!show))
-  const hide$ = shouldShow$.pipe(filter((show) => !show))
+const selector = `tooltip`
+const defaultTime = 3000
+const defaultAnimationDuration = 800
 
-  const mousePosition$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
-    auditTime(16),
-    map((event) => ({
-      x: event.pageX,
-      y: event.pageY,
-    })),
-  )
+let tooltipComponent: Tooltip | null
+let outAnimation: anime.AnimeInstance | undefined
+let cycleComplete = true
+let activeTooltip: TooltipConfig
+let onComplete: () => void // implement later
 
-  const tooltipActive$ = combineLatest([show$, mousePosition$]).pipe(
-    takeUntil(hide$),
-    map(([, mousePosition]) => mousePosition),
-    repeat(),
-  )
+const shouldShow$ = tooltip$.pipe(
+  switchMap((tooltip) => {
+    return timer(0, tooltip.time || defaultTime).pipe(
+      map((_, index) => (!index ? tooltip : undefined)),
+      take(2),
+    )
+  }),
+  repeat(),
+)
 
-  const animate$ = show$.pipe(
-    switchMap(() =>
-      concat(timer(0).pipe(mapTo('IN')), timer(time - animationDuration).pipe(mapTo('OUT'))),
+const show$ = shouldShow$.pipe(filter((show) => !!show))
+const hide$ = shouldShow$.pipe(filter((show) => !show))
+const tooltipActive$ = show$.pipe(takeUntil(hide$), endWith(false as const), repeat())
+
+const mousePosition$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
+  auditTime(16),
+  map((event) => ({
+    x: event.pageX,
+    y: event.pageY,
+  })),
+)
+
+// @TODO re-add oncomplete when needed
+const animate$ = show$.pipe(
+  filterNullish(),
+  switchMap(({ time = defaultTime, animationDuration = defaultAnimationDuration }) =>
+    concat(
+      timer(0).pipe(mapTo({ type: 'IN', animationDuration })),
+      timer(time - animationDuration).pipe(mapTo({ type: 'OUT', animationDuration })),
     ),
-  )
+  ),
+)
 
-  const animationSubscription = animate$.subscribe((animate) => {
-    if (animate === 'IN') {
-      initInAnimation()
-    } else if (animate === 'OUT' && !destroying) {
-      initOutAnimation()
-    }
-  })
+animate$.subscribe(({ type, animationDuration }) => {
+  if (type === 'IN') {
+    initInAnimation(animationDuration)
+  } else if (type === 'OUT') {
+    initOutAnimation(animationDuration)
+  }
+})
 
-  const tooltipSubscription = tooltipActive$.subscribe((mousePosition) => {
-    if (!tooltipComponent) {
-      tooltipComponent = new Tooltip({
-        props: {
-          title,
-          time,
-          x: mousePosition.x,
-          y: mousePosition.y,
-          selector,
-        },
-        target: document.body,
-      })
-    } else if (tooltipComponent) {
-      tooltipComponent.$set({
+combineLatest([tooltipActive$, mousePosition$]).subscribe(([tooltip, mousePosition]) => {
+  if (!tooltip) {
+    return
+  }
+
+  if (tooltip !== activeTooltip && !!tooltipComponent) {
+    tooltipComponent.$destroy()
+    tooltipComponent = null
+    activeTooltip = tooltip
+  }
+  const { title, type, time = defaultTime, TooltipComponent = Tooltip } = tooltip
+
+  if (!tooltipComponent) {
+    tooltipComponent = new TooltipComponent({
+      props: {
+        title,
+        type,
+        time,
         x: mousePosition.x,
         y: mousePosition.y,
-      })
-    }
-  })
-
-  function initOutAnimation(onComplete?: () => void) {
-    if (outAnimation && !outAnimation.completed) {
-      outAnimation.complete = () => {
-        if (onComplete) {
-          onComplete()
-        }
-
-        if (outAnimation?.complete) {
-          outAnimation.complete(outAnimation)
-        }
-      }
-    } else if (cycleComplete && onComplete) {
-      onComplete()
-    } else {
-      outAnimation = anime({
-        targets: `.${selector}`,
-        translateX: [0, 70],
-        opacity: [1, 0],
-        easing: 'easeInElastic',
-        duration: animationDuration,
-        complete: () => {
-          outAnimation = undefined
-          cycleComplete = true
-
-          if (onComplete) {
-            onComplete()
-          }
-        },
-      })
-    }
-  }
-
-  function initInAnimation() {
-    cycleComplete = false
-
-    anime({
-      targets: `.${selector}`,
-      translateX: [70, 0],
-      opacity: [0, 1],
-      easing: 'easeOutElastic',
-      duration: animationDuration,
+        selector,
+      },
+      target: document.body,
+    })
+  } else if (tooltipComponent) {
+    tooltipComponent.$set({
+      x: mousePosition.x,
+      y: mousePosition.y,
     })
   }
+})
 
-  return {
-    destroy() {
-      destroying = true
+function initOutAnimation(animationDuration: number) {
+  if (outAnimation && !outAnimation.completed) {
+    outAnimation.complete = () => {
+      if (onComplete) {
+        onComplete()
+      }
+    }
+  } else if (cycleComplete && onComplete) {
+    onComplete()
+  } else {
+    outAnimation = anime({
+      targets: `.${selector}`,
+      translateX: [0, 70],
+      opacity: [1, 0],
+      easing: 'easeInElastic',
+      duration: animationDuration,
+      complete: () => {
+        outAnimation = undefined
+        cycleComplete = true
 
-      initOutAnimation(() => {
         if (tooltipComponent) {
           tooltipComponent.$destroy()
           tooltipComponent = null
         }
-        tooltipSubscription.unsubscribe()
-        animationSubscription.unsubscribe()
-      })
-    },
+
+        if (onComplete) {
+          onComplete()
+        }
+      },
+    })
   }
+}
+
+function initInAnimation(animationDuration: number) {
+  cycleComplete = false
+
+  anime({
+    targets: `.${selector}`,
+    translateX: [70, 0],
+    opacity: [0, 1],
+    easing: 'easeOutElastic',
+    duration: animationDuration,
+  })
 }

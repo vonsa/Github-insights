@@ -18,6 +18,7 @@
   {style}
   on:mouseover={() => applyStyles('hover')}
   on:mouseout={() => applyStyles('default')}
+  on:click
 >
   <slot />
 </div>

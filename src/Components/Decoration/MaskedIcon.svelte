@@ -16,8 +16,8 @@
   let { width, height, ...remainingStyles } = styles || {}
 </script>
 
-<Stylable styles={{ width, height, transition: remainingStyles.transition }}>
-  <div alt="icon" style={`${maskImageSrc}`} class={`mask ${size}`} on:click>
+<Stylable styles={{ width, height, transition: remainingStyles.transition }} on:click>
+  <div alt="icon" style={`${maskImageSrc}`} class={`mask ${size}`}>
     <div class="icon">
       <Stylable styles={remainingStyles} />
     </div>

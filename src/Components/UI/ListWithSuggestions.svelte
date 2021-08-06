@@ -1,0 +1,58 @@
+<script context="module" lang="ts">
+  export interface MappedSuggestions {
+    [key: string]: boolean
+  }
+</script>
+
+<script lang="ts">
+  import { tooltip$ } from '../../use/tooltip/tooltip'
+  import Suggestions from './Suggestions.svelte'
+
+  export let suggestions: string[]
+
+  let selection: string[] = []
+  let inputValue: string
+  let mappedSuggestions: MappedSuggestions
+
+  $: mappedSuggestions = suggestions.reduce((acc, curr) => {
+    return { ...acc, [curr]: true }
+  }, {})
+
+  function removeFromSelection(selected: string) {
+    selection = selection.filter((item) => item !== selected)
+    if (selected in mappedSuggestions) {
+      mappedSuggestions[selected] = true
+    }
+  }
+
+  function addToSelection(selected: string) {
+    if (selection.includes(selected)) {
+      console.log('nexting error')
+      tooltip$.next({ title: 'Already selected!', type: 'ERROR' })
+      return
+    }
+
+    selection = [...selection, selected]
+    if (selected in mappedSuggestions) {
+      mappedSuggestions[selected] = false
+    }
+  }
+</script>
+
+<input type="text" bind:value={inputValue} />
+<button on:click={() => addToSelection(inputValue)}>Submit</button>
+{#each selection as item}
+  <slot name="selected-item" {item} {removeFromSelection} />
+{/each}
+<Suggestions suggestions={mappedSuggestions}>
+  <svelte:fragment let:suggestion>
+    <button class="suggestion" on:click={() => addToSelection(suggestion)}>{suggestion}</button>
+  </svelte:fragment>
+</Suggestions>
+
+<style lang="scss">
+  .suggestion {
+    background: crimson;
+    color: white;
+  }
+</style>
