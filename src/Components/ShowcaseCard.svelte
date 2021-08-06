@@ -1,22 +1,23 @@
 <script context="module" lang="ts">
   export interface ShowcaseCard {
-    icon: string
+    icon: Icon
     label: string
     count: number
   }
 </script>
 
 <script lang="ts">
-  import Icon from './Icon.svelte'
+  import MaskedIcon from './Decoration/MaskedIcon.svelte'
+  import type { Icon } from 'src/assets/icons/icons'
 
-  export let icon: string
+  export let icon: Icon
   export let label: string
   export let count: number
 </script>
 
 <div class="container">
   <div class="card">
-    <Icon {icon} width="60%" />
+    <MaskedIcon {icon} styles={{ width: { default: '60%' } }} />
     <h2 class="count">{count}</h2>
     <h4 class="label">{label}</h4>
   </div>

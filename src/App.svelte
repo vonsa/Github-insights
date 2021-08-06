@@ -1,12 +1,21 @@
 <script lang="ts">
   import Home from './Routes/Home.svelte'
   import Router from 'svelte-spa-router'
+  // import { wrap } from 'svelte-spa-router/wrap'
   import Apollo from './Components/Hoc/Apollo.svelte'
   import AutoRedirect from './Components/Hoc/AutoRedirect.svelte'
   import './stores/auth'
+  import Modal from './Components/UI/Modal.svelte'
+  import AuthenticateButton from './Components/ProjectSpecific/AuthenticateButton.svelte'
+  import { promptLogin$ } from './stores/auth'
 
   const routes = {
     '/': Home,
+    // '/logged-in': wrap({
+    //   component: Home,
+    //   conditions: [() => !!$token$],
+    // }),
+    // '*': NotFound,
   }
 </script>
 
@@ -26,3 +35,13 @@
     <Router {routes} restoreScrollState={true} />
   </Apollo>
 </AutoRedirect>
+{#if $promptLogin$}
+  <Modal
+    on:close={() => {
+      promptLogin$.next(false)
+    }}
+  >
+    <h3>You seem to be logged out, please authorize yourself using Github</h3>
+    <AuthenticateButton />
+  </Modal>
+{/if}

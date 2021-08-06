@@ -8,6 +8,7 @@ import { querystring$, watchParam } from './searchParams'
 const tryLogin$ = new Subject()
 const code$ = watchParam('code')
 const token$ = new BehaviorSubject(localStorage.getItem('auth_token'))
+const promptLogin$ = new Subject<boolean>()
 
 function login(redirectUrl: string = window.location.href) {
   tryLogin$.next(redirectUrl)
@@ -48,4 +49,4 @@ combineLatest([tryLogin$, code$])
     }
   })
 
-export { token$, login, logout }
+export { token$, promptLogin$, login, logout }

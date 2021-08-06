@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloLink, InMemoryCache, HttpLink, gql, from } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { logout, token$ } from 'src/stores/auth'
+import { logout, promptLogin$, token$ } from 'src/stores/auth'
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
 
@@ -19,6 +19,7 @@ const authLink = new ApolloLink((operation, forward) => {
 const logoutLink = onError(({ networkError }) => {
   if (networkError && 'statusCode' in networkError && networkError.statusCode === 401) {
     logout()
+    promptLogin$.next(true)
   }
 })
 

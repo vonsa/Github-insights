@@ -24,7 +24,17 @@ const contributionFragment = `
     followers {
       totalCount
     }
-    repositories(first: $firstRepos, orderBy: { direction: DESC, field: STARGAZERS }, after: $cursor) {
+    forkedRepositories: repositories(first: $firstRepos, orderBy: { direction: DESC, field: STARGAZERS }, after: $forkedRepositoriesCursor, ownerAffiliations: [OWNER], isFork: true) {
+      totalCount
+      nodes {
+        name
+        stargazerCount
+      }
+      pageInfo {
+        endCursor
+      }
+    }
+    createdRepositories: repositories(first: $firstRepos, orderBy: { direction: DESC, field: STARGAZERS }, after: $createdRepositoriesCursor, ownerAffiliations: [OWNER], isFork: false) {
       totalCount
       nodes {
         name
@@ -54,7 +64,7 @@ const contributionFragment = `
 export const QUERY_USER = `
   ${infoFragment}
   ${contributionFragment}
-  query User($user: String!, $cursor: String, $firstRepos: Int = 100) {
+  query User($user: String!, $forkedRepositoriesCursor: String, $createdRepositoriesCursor: String, $firstRepos: Int = 100) {
     user(login: $user) {
         id
       ...UserInfo

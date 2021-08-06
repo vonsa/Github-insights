@@ -1,7 +1,12 @@
 <script context="module" lang="ts">
+  import type { Icon } from 'src/assets/icons/icons'
   interface RankedItem {
     label: string
     count: number
+  }
+
+  interface FormattedRankedItem extends RankedItem {
+    icon: Icon
   }
 </script>
 
@@ -9,6 +14,14 @@
   import Showcase from './Showcase.svelte'
 
   export let items: [RankedItem, RankedItem, RankedItem]
+
+  function getFormattedItems(): FormattedRankedItem[] {
+    return items.map((item, index) => ({ ...item, icon: getIcon((index + 1) as 1 | 2 | 3) }))
+  }
+
+  function getIcon(number: 1 | 2 | 3): Icon {
+    return `rank-${number}`
+  }
 </script>
 
-<Showcase cards={items.map((item, index) => ({ ...item, icon: `rank-${index + 1}` }))} />
+<Showcase cards={getFormattedItems()} />

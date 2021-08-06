@@ -3,11 +3,12 @@
   import type { UserInfo } from 'src/types/User/UserInfo'
   import RankedItems from '../Components/RankedItems.svelte'
   import Tabs from '../Components/UI/Tabs.svelte'
-  import { getBaseUrl } from 'src/util/url'
-  import { token$, login } from 'src/stores/auth'
+  import { token$ } from 'src/stores/auth'
   import { setParam } from 'src/stores/searchParams'
   import QueryFromUrl from '../Components/Hoc/QueryFromUrl.svelte'
   import ShareString from '../Components/ShareString.svelte'
+  import AuthenticateButton from '../Components/ProjectSpecific/AuthenticateButton.svelte'
+  import MaskedIcon from '../Components/Decoration/MaskedIcon.svelte'
 
   function getUserInfo(user: any): UserInfo {
     const { name, login, createdAt, avatarUrl, company, websiteUrl } = user
@@ -30,15 +31,22 @@
   }
 </script>
 
-<Tabs tabs={['Login', 'View data', 'Share link']} disableNextTabs let:activeTab let:next>
+<Tabs tabs={['Login', 'View data', 'Share link']} let:activeTab let:next>
   {#if activeTab === 0}
     {#if !$token$}
       <h3>The first step is to authenticate using Github</h3>
-      <button
-        on:click={() => {
-          login(getBaseUrl())
-        }}>Authenticate using Github</button
-      >
+      <AuthenticateButton />
+      <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <MaskedIcon
+          icon="bottle"
+          styles={{
+            width: { default: '2rem', hover: '80rem' },
+            height: { default: '2rem', hover: '80rem' },
+            'background-color': { default: 'black', hover: 'red' },
+            transition: { default: 'all 0.4s ease-in-out' },
+          }}
+        />
+      </div>
     {:else}
       {next()}
     {/if}
@@ -54,7 +62,7 @@
     >
     <QueryFromUrl let:data>
       <User {...getUserInfo(data.data.user)} />
-      <RankedItems items={getRankedItems(data.data.user.repositories)} />
+      <RankedItems items={getRankedItems(data.data.user.createdRepositories)} />
     </QueryFromUrl>
   {/if}
   {#if activeTab === 2}
