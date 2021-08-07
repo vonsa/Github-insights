@@ -41,6 +41,7 @@
     border-radius: 4px;
     padding: 4px;
     pointer-events: none;
+    z-index: 999;
 
     &.error {
       background: crimson;

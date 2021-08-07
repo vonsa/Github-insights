@@ -27,8 +27,10 @@
 
   function addToSelection(selected: string) {
     if (selection.includes(selected)) {
-      console.log('nexting error')
       tooltip$.next({ title: 'Already selected!', type: 'ERROR' })
+      return
+    } else if (selected === '' || selected === undefined) {
+      tooltip$.next({ title: 'Input may not be empty', type: 'ERROR' })
       return
     }
 
