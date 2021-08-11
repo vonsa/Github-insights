@@ -3,6 +3,7 @@
   import type { UserInfo } from 'src/types/User/UserInfo'
   import RankedItems from '../Components/RankedItems.svelte'
   import Tabs from '../Components/UI/Tabs.svelte'
+  import MouseTest from '../Components/UI/MouseTest.svelte'
   import { token$ } from 'src/stores/auth'
   import { setParam } from 'src/stores/searchParams'
   import QueryFromUrl from '../Components/Hoc/QueryFromUrl.svelte'
@@ -78,5 +79,6 @@
   {/if}
   {#if activeTab === 3}
     <p>tab 3</p>
+    <MouseTest />
   {/if}
 </Tabs>
