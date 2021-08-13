@@ -11,6 +11,7 @@
   import AuthenticateButton from '../Components/ProjectSpecific/AuthenticateButton.svelte'
   import MaskedIcon from '../Components/Decoration/MaskedIcon.svelte'
   import ListWithSuggestions from '../Components/UI/ListWithSuggestions.svelte'
+  import Interacters from '../Components/UI/Interacters.svelte'
 
   function getUserInfo(user: any): UserInfo {
     const { name, login, createdAt, avatarUrl, company, websiteUrl } = user
@@ -82,3 +83,5 @@
     <MouseTest />
   {/if}
 </Tabs>
+
+<Interacters />
