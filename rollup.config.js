@@ -50,6 +50,7 @@ export default {
       ? replace({ 'process.env.NODE_ENV': JSON.stringify('production') })
       : replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
     replace({
+      'process.env.NODE_ENV': process.env.NODE_ENV,
       'process.env': JSON.stringify({
         isProd: production,
         ...config().parsed, // attached the .env config

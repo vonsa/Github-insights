@@ -8,6 +8,7 @@ const iconsConfig = {
   clipboard: 'clipboard.svg',
   close: 'close.svg',
   github: 'github.svg',
+  star: 'star.svg',
 }
 
 export type Icon = keyof typeof iconsConfig
