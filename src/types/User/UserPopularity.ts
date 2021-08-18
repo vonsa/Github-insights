@@ -1,9 +1,9 @@
 export interface UserPopularity {
-  id: string
+  // id: string
   followers: Followers
   repositories: Repositories
   contributionsCollection: ContributionsCollection
-  __typename: string
+  // __typename: string
 }
 
 export interface ContributionsCollection {

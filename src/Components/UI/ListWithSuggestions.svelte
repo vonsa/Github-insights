@@ -6,9 +6,10 @@
 
 <script lang="ts">
   import { tooltip$ } from '../../use/tooltip/tooltip'
+  import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import Suggestions from './Suggestions.svelte'
 
-  export let suggestions: string[]
+  export let suggestions: readonly string[]
 
   let selection: string[] = []
   let inputValue: string
@@ -44,7 +45,12 @@
 <input type="text" bind:value={inputValue} />
 <button on:click={() => addToSelection(inputValue)}>Submit</button>
 {#each selection as item}
-  <slot name="selected-item" {item} {removeFromSelection} />
+  <slot name="selected-item" {item} {removeFromSelection}>
+    <div class="selected-item">
+      <p>{item}</p>
+      <MaskedIcon icon="close" on:click={() => removeFromSelection(item)} />
+    </div>
+  </slot>
 {/each}
 <Suggestions suggestions={mappedSuggestions}>
   <svelte:fragment let:suggestion>

@@ -190,7 +190,7 @@ combineLatest([interacters$, interactibleHoveredDetails$])
       if (!hovered) {
         interacter.dispatchEvent(
           new CustomEvent('leave', {
-            detail: { node: interacter, interactable, x, y },
+            detail: { interacter, interactable, x, y },
           }),
         )
         return
@@ -198,7 +198,7 @@ combineLatest([interacters$, interactibleHoveredDetails$])
 
       interacter.dispatchEvent(
         new CustomEvent('hovering', {
-          detail: { node: interacter, interactable, x, y },
+          detail: { interacter, interactable, x, y },
         }),
       )
     })
@@ -206,7 +206,7 @@ combineLatest([interacters$, interactibleHoveredDetails$])
     if (!hovered) {
       interactable.dispatchEvent(
         new CustomEvent('left', {
-          detail: { node: interactable, x, y },
+          detail: { interactable, x, y },
         }),
       )
       return
@@ -214,24 +214,7 @@ combineLatest([interacters$, interactibleHoveredDetails$])
 
     interactable.dispatchEvent(
       new CustomEvent('hovering', {
-        detail: { node: interactable, x, y },
+        detail: { interactable, x, y },
       }),
     )
   })
-
-/*
-EVENTS:
-
-animationend
-animationstart
-animationiteration?
-animationcancel?
-same for transition (e.g. transitionend)
-
-pointerenter
-pointerleave
-mouseenter
-mouseleave
-pointermove?
-
-*/

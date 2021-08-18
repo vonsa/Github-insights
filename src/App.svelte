@@ -8,7 +8,7 @@
   import Modal from './Components/UI/Modal.svelte'
   import AuthenticateButton from './Components/ProjectSpecific/AuthenticateButton.svelte'
   import { promptLogin$ } from './stores/auth'
-  import MouseFollower from './Components/UI/MouseFollower.svelte'
+  // import MouseFollower from './Components/UI/MouseFollower.svelte'
 
   const routes = {
     '/': Home,
@@ -31,7 +31,7 @@
   />
 </svelte:head>
 
-<MouseFollower />
+<!-- <MouseFollower /> -->
 <AutoRedirect>
   <Apollo>
     <Router {routes} restoreScrollState={true} />

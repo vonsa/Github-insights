@@ -9,9 +9,7 @@
     interacter.style.transform = `translate(${left}px, ${top}px)`
   }
 
-  function onMouseOut({ detail: { interacter, x, y } }: InteractCallbackProperties) {
-    console.warn('onMouseOut..', { interacter, x, y })
-
+  function onMouseOut({ detail: { interacter } }: InteractCallbackProperties) {
     interacter.style.width = ``
     interacter.style.height = ``
     interacter.style.transform = ``
