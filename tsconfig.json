@@ -27,5 +27,11 @@
     "baseUrl": "."
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "__sapper__/*", "public/*", "**/*.test.ts"]
+  "exclude": [
+    "node_modules/*",
+    "__sapper__/*",
+    "public/*",
+    "**/*.test.ts",
+    "src/GraphQL/types/globalTypes.ts"
+  ]
 }

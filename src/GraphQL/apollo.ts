@@ -1,4 +1,11 @@
-import { ApolloClient, ApolloLink, InMemoryCache, HttpLink, gql, from } from '@apollo/client'
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  HttpLink,
+  from,
+  DocumentNode,
+} from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { logout, promptLogin$, token$ } from 'src/stores/auth'
 
@@ -48,11 +55,9 @@ export const client = new ApolloClient({
   }),
 })
 
-export function query(query: string, variables: Record<string, unknown>) {
+export function query(query: DocumentNode, variables: Record<string, unknown>) {
   return client.query({
-    query: gql`
-      ${query}
-    `,
+    query,
     variables,
   })
 }

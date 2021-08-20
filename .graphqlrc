@@ -1,0 +1,10 @@
+schema: 'schemas/github-api-schema.graphql'
+documents: 'src/GraphQL/Queries/**'
+extensions: {
+  endpoints: {
+    default: {
+      url: "https://api.github.com/graphql",
+      headers: { authorization: `` },
+    },
+  },
+}

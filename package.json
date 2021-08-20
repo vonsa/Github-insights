@@ -9,7 +9,8 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint ./src --ext .ts",
     "lint:fix": "npm run lint -- --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "graphql:types": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat"
   },
   "lint-staged": {
     "*.ts?(x)": [
