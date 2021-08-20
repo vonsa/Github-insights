@@ -10,7 +10,7 @@
   export let userName: string
 
   async function getUserStats(userName: string) {
-    const response = await query<User, UserVariables>(QUERY_USER, { user: userName, info: true })
+    const response = await query<User, UserVariables>(QUERY_USER, { user: userName, stats: true })
 
     return userStatsMapper(response.data.user)
   }

@@ -1,37 +1,51 @@
 import { gql } from '@apollo/client'
 
 export const QUERY_USER = gql`
-  query User($user: String!) {
+  query User($user: String!, $info: Boolean = false, $stats: Boolean = false) {
     user(login: $user) {
-      repositoriesContributedTo(
-        first: 1
-        contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
-      ) {
-        totalCount
+      ...UserInfo @include(if: $info)
+      ...UserStats @include(if: $stats)
+    }
+  }
+
+  fragment UserInfo on User {
+    name
+    login
+    createdAt
+    avatarUrl
+    company
+    websiteUrl
+  }
+
+  fragment UserStats on User {
+    repositoriesContributedTo(
+      first: 1
+      contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]
+    ) {
+      totalCount
+    }
+    pullRequests {
+      totalCount
+    }
+    repositories(
+      first: 100
+      ownerAffiliations: OWNER
+      orderBy: { direction: DESC, field: STARGAZERS }
+    ) {
+      totalCount
+      nodes {
+        stargazerCount
       }
-      pullRequests {
-        totalCount
-      }
-      repositories(
-        first: 100
-        ownerAffiliations: OWNER
-        orderBy: { direction: DESC, field: STARGAZERS }
-      ) {
-        totalCount
-        nodes {
-          stargazerCount
-        }
-      }
-      followers {
-        totalCount
-      }
-      contributionsCollection {
-        totalCommitContributions
-        restrictedContributionsCount
-      }
-      issues {
-        totalCount
-      }
+    }
+    followers {
+      totalCount
+    }
+    contributionsCollection {
+      totalCommitContributions
+      restrictedContributionsCount
+    }
+    issues {
+      totalCount
     }
   }
 `

@@ -18,6 +18,10 @@ export interface UserInfo {
    */
   login: string;
   /**
+   * Identifies the date and time when the object was created.
+   */
+  createdAt: any;
+  /**
    * A URL pointing to the user's public avatar.
    */
   avatarUrl: any;
@@ -29,8 +33,4 @@ export interface UserInfo {
    * A URL pointing to the user's public website/blog.
    */
   websiteUrl: any | null;
-  /**
-   * Identifies the date and time when the object was created.
-   */
-  createdAt: any;
 }

@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "concurrently \"rollup -c -w\" \"npm run graphql:types:dev\"",
     "start": "sirv public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint ./src --ext .ts",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky install",
-    "graphql:types": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat"
+    "graphql:types": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat",
+    "graphql:types:dev": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat --watch"
   },
   "lint-staged": {
     "*.ts?(x)": [
@@ -75,6 +76,7 @@
     "animejs": "^3.2.1",
     "axios": "^0.21.1",
     "bourbon": "^7.0.0",
+    "concurrently": "^6.2.1",
     "date-fns": "^2.22.1",
     "glob": "^7.1.7",
     "graphql": "^15.5.1",

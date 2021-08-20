@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: User
+// GraphQL fragment: UserStats
 // ====================================================
 
-export interface User_user_repositoriesContributedTo {
+export interface UserStats_repositoriesContributedTo {
   __typename: "RepositoryConnection";
   /**
    * Identifies the total count of items in the connection.
@@ -15,7 +15,7 @@ export interface User_user_repositoriesContributedTo {
   totalCount: number;
 }
 
-export interface User_user_pullRequests {
+export interface UserStats_pullRequests {
   __typename: "PullRequestConnection";
   /**
    * Identifies the total count of items in the connection.
@@ -23,7 +23,7 @@ export interface User_user_pullRequests {
   totalCount: number;
 }
 
-export interface User_user_repositories_nodes {
+export interface UserStats_repositories_nodes {
   __typename: "Repository";
   /**
    * Returns a count of how many stargazers there are on this object
@@ -31,7 +31,7 @@ export interface User_user_repositories_nodes {
   stargazerCount: number;
 }
 
-export interface User_user_repositories {
+export interface UserStats_repositories {
   __typename: "RepositoryConnection";
   /**
    * Identifies the total count of items in the connection.
@@ -40,10 +40,10 @@ export interface User_user_repositories {
   /**
    * A list of nodes.
    */
-  nodes: (User_user_repositories_nodes | null)[] | null;
+  nodes: (UserStats_repositories_nodes | null)[] | null;
 }
 
-export interface User_user_followers {
+export interface UserStats_followers {
   __typename: "FollowerConnection";
   /**
    * Identifies the total count of items in the connection.
@@ -51,7 +51,7 @@ export interface User_user_followers {
   totalCount: number;
 }
 
-export interface User_user_contributionsCollection {
+export interface UserStats_contributionsCollection {
   __typename: "ContributionsCollection";
   /**
    * How many commits were made by the user in this time span.
@@ -64,7 +64,7 @@ export interface User_user_contributionsCollection {
   restrictedContributionsCount: number;
 }
 
-export interface User_user_issues {
+export interface UserStats_issues {
   __typename: "IssueConnection";
   /**
    * Identifies the total count of items in the connection.
@@ -72,67 +72,30 @@ export interface User_user_issues {
   totalCount: number;
 }
 
-export interface User_user {
+export interface UserStats {
   __typename: "User";
-  /**
-   * The user's public profile name.
-   */
-  name: string | null;
-  /**
-   * The username used to login.
-   */
-  login: string;
-  /**
-   * Identifies the date and time when the object was created.
-   */
-  createdAt: any;
-  /**
-   * A URL pointing to the user's public avatar.
-   */
-  avatarUrl: any;
-  /**
-   * The user's public profile company.
-   */
-  company: string | null;
-  /**
-   * A URL pointing to the user's public website/blog.
-   */
-  websiteUrl: any | null;
   /**
    * A list of repositories that the user recently contributed to.
    */
-  repositoriesContributedTo: User_user_repositoriesContributedTo;
+  repositoriesContributedTo: UserStats_repositoriesContributedTo;
   /**
    * A list of pull requests associated with this user.
    */
-  pullRequests: User_user_pullRequests;
+  pullRequests: UserStats_pullRequests;
   /**
    * A list of repositories that the user owns.
    */
-  repositories: User_user_repositories;
+  repositories: UserStats_repositories;
   /**
    * A list of users the given user is followed by.
    */
-  followers: User_user_followers;
+  followers: UserStats_followers;
   /**
    * The collection of contributions this user has made to different repositories.
    */
-  contributionsCollection: User_user_contributionsCollection;
+  contributionsCollection: UserStats_contributionsCollection;
   /**
    * A list of issues associated with this user.
    */
-  issues: User_user_issues;
-}
-
-export interface User {
-  /**
-   * Lookup a user by login.
-   */
-  user: User_user | null;
-}
-
-export interface UserVariables {
-  user: string;
-  info?: boolean | null;
-  stats?: boolean | null;
+  issues: UserStats_issues;
 }
