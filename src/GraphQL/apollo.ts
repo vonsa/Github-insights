@@ -5,6 +5,7 @@ import {
   HttpLink,
   from,
   DocumentNode,
+  ApolloQueryResult,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { logout, promptLogin$, token$ } from 'src/stores/auth'
@@ -55,8 +56,11 @@ export const client = new ApolloClient({
   }),
 })
 
-export function query(query: DocumentNode, variables: Record<string, unknown>) {
-  return client.query({
+export function query<Response = any, Variables = Record<string, unknown>>(
+  query: DocumentNode,
+  variables: Variables,
+): Promise<ApolloQueryResult<Response>> {
+  return client.query<Response>({
     query,
     variables,
   })

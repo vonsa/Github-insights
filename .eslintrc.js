@@ -35,6 +35,7 @@ module.exports = {
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
         'import/extensions': 'off',
+        camelcase: 'off',
       },
     },
     {

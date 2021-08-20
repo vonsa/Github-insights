@@ -36,6 +36,7 @@
     "@tsconfig/svelte": "^2.0.0",
     "@types/animejs": "^3.1.4",
     "@types/jest": "^26.0.24",
+    "@types/lodash": "^4.14.172",
     "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",

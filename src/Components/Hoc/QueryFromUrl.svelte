@@ -9,10 +9,12 @@
   const variables$ = watchParam('variables')
 
   const params$ = combineLatest([queryParam$, variables$])
+
+  $: console.log('variables$', $variables$)
 </script>
 
 {#if $params$ && queries[$queryParam$]}
-  {#await query( queries[$queryParam$], { ...$variables$, firstRepos: parseInt($variables$.firstRepos) }, )}
+  {#await query(queries[$queryParam$], { ...$variables$ })}
     <Spinner />
   {:then data}
     <slot {data} />

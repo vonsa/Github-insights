@@ -8,7 +8,7 @@
 
 <script lang="ts">
   import MaskedIcon from './Decoration/MaskedIcon.svelte'
-  import type { Icon } from 'src/assets/icons/icons'
+  import type { Icon } from 'src/assets/icons'
 
   export let icon: Icon
   export let label: string

@@ -10,6 +10,7 @@
   import AuthenticateButton from '../Components/ProjectSpecific/AuthenticateButton.svelte'
   import MaskedIcon from '../Components/Decoration/MaskedIcon.svelte'
   import Profile from '../Components/Composed/Profile.svelte'
+  import UserStats from '../Components/UserStats.svelte'
   // import MouseTest from '../Components/UI/MouseTest.svelte'
   // import Interacters from '../Components/UI/Interacters.svelte'
 
@@ -60,7 +61,7 @@
     <button
       on:click={() => {
         setParam('query', 'QUERY_USER')
-        setParam('variables', { user: 'ljharb', firstRepos: 3 })
+        setParam('variables', { user: 'ljharb' })
       }}>set param</button
     >
     <QueryFromUrl let:data>
@@ -68,14 +69,12 @@
       <RankedItems items={getRankedItems(data.data.user.createdRepositories)} /> -->
       <Profile
         repositories={getRankedItems(data.data.user.createdRepositories)}
-        stats={{ first: 'hello', second: 'there' }}
         avatar={{ src: data.data.user.avatarUrl, alt: 'avatar' }}
-        name={data.data.user.name || data.data.user.login}
       />
     </QueryFromUrl>
   {/if}
   {#if activeTab === 2}
-    <!--  -->
+    <UserStats userName="ljharb" />
   {/if}
   {#if activeTab === 3}
     <p>tab 3</p>

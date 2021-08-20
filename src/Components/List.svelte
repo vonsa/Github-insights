@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let items: Record<string, string>
+  export let items: Record<string, string | number>
 </script>
 
 <div class="list">

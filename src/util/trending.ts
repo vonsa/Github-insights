@@ -7,5 +7,5 @@ export const timeAgo = {
 }
 
 export function getTopRepositoriesQuery(from: Date) {
-  return `created:>${format(from, 'YYYY-MM-DD')}`
+  return `created:>${format(from, 'yyyy-mm-dd')}`
 }

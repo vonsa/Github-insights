@@ -1,7 +1,8 @@
-import { QUERY_USER } from './user-queries'
+import type { DocumentNode } from 'graphql'
+import { QUERY_USER } from './User/user-queries'
 
 interface Queries {
-  [key: string]: string
+  [key: string]: DocumentNode
 }
 
 export const queries: Queries = {

@@ -1,19 +1,16 @@
 <script lang="ts">
   import ListWithSuggestions from '../UI/ListWithSuggestions.svelte'
   import Image from '../Image.svelte'
-  import List from '../List.svelte'
   import RankedItems from '../RankedItems.svelte'
   import type { RankedItemsProp } from '../RankedItems.svelte'
   import GridRow from '../Layout/GridRow.svelte'
   import Selector from '../UI/Selector.svelte'
   import Row from '../Layout/Row.svelte'
   import { addProfile, profiles$, removeProfile } from 'src/stores/profiles'
-  import { topics } from 'src/GraphQL/Queries/repo-queries'
+  import { topics } from 'src/GraphQL/Queries/Search/search_helpers'
 
   export let repositories: RankedItemsProp
-  export let stats: Record<string, string>
   export let avatar: { src: string; alt: string }
-  export let name: string
 
   profiles$.subscribe((profiles) => {
     console.log({ profiles })
@@ -52,12 +49,7 @@
     <div class="avatar" slot="left">
       <Image src={avatar.src} alt={avatar.alt} />
     </div>
-
     <!-- Current stats -->
-    <svelte:fragment slot="right">
-      <h2 class="name">{name}</h2>
-      <List items={stats} />
-    </svelte:fragment>
   </GridRow>
 </Row>
 
@@ -82,10 +74,6 @@
 
   .selector {
     display: flex;
-  }
-
-  .name {
-    margin-bottom: $margin-medium;
   }
 
   .avatar {

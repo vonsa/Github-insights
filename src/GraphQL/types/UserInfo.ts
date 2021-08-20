@@ -1,0 +1,36 @@
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: UserInfo
+// ====================================================
+
+export interface UserInfo {
+  __typename: "User";
+  /**
+   * The user's public profile name.
+   */
+  name: string | null;
+  /**
+   * The username used to login.
+   */
+  login: string;
+  /**
+   * A URL pointing to the user's public avatar.
+   */
+  avatarUrl: any;
+  /**
+   * The user's public profile company.
+   */
+  company: string | null;
+  /**
+   * A URL pointing to the user's public website/blog.
+   */
+  websiteUrl: any | null;
+  /**
+   * Identifies the date and time when the object was created.
+   */
+  createdAt: any;
+}
