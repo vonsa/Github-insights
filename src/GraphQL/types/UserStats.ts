@@ -23,7 +23,7 @@ export interface UserStats_pullRequests {
   totalCount: number;
 }
 
-export interface UserStats_repositories_nodes {
+export interface UserStats_repositoriesStats_nodes {
   __typename: "Repository";
   /**
    * Returns a count of how many stargazers there are on this object
@@ -31,7 +31,7 @@ export interface UserStats_repositories_nodes {
   stargazerCount: number;
 }
 
-export interface UserStats_repositories {
+export interface UserStats_repositoriesStats {
   __typename: "RepositoryConnection";
   /**
    * Identifies the total count of items in the connection.
@@ -40,7 +40,7 @@ export interface UserStats_repositories {
   /**
    * A list of nodes.
    */
-  nodes: (UserStats_repositories_nodes | null)[] | null;
+  nodes: (UserStats_repositoriesStats_nodes | null)[] | null;
 }
 
 export interface UserStats_followers {
@@ -85,7 +85,7 @@ export interface UserStats {
   /**
    * A list of repositories that the user owns.
    */
-  repositories: UserStats_repositories;
+  repositoriesStats: UserStats_repositoriesStats;
   /**
    * A list of users the given user is followed by.
    */

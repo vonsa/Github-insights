@@ -6,8 +6,13 @@
   import GridRow from '../Layout/GridRow.svelte'
   import Selector from '../UI/Selector.svelte'
   import Row from '../Layout/Row.svelte'
-  import { addProfile, profiles$, removeProfile } from 'src/stores/profiles'
+  import { profiles$, updateProfile } from 'src/stores/profiles'
   import { topics } from 'src/GraphQL/Queries/Search/search_helpers'
+  import { userStatsMapper } from 'src/mappers/user/userStats'
+  import { userInfoMapper } from 'src/mappers/user/info'
+  import { query } from 'src/GraphQL/apollo'
+  import type { User, UserVariables } from 'src/GraphQL/types/User'
+  import { QUERY_USER } from 'src/GraphQL/Queries/User/user-queries'
 
   export let repositories: RankedItemsProp
   export let avatar: { src: string; alt: string }
@@ -26,6 +31,42 @@
       fetchProfile(value)
     }
   }
+
+  async function getProfile(userName: string) {
+    let profile = $profiles$.find((profile) => profile.name === userName)
+
+    if (!profile) {
+      const response = await query<{ user: User['user'] }, UserVariables>(QUERY_USER, {
+        user: userName,
+        stats: true,
+        info: true,
+        repositories: true,
+        starredRepositories: true,
+      })
+
+      // @TODO: implement repositories and starredRepositories
+
+      if (response.error || !response.data.user) {
+        throw new Error('Could not fetch user from API')
+      }
+
+      const stats = userStatsMapper(response.data.user)
+      const info = userInfoMapper(response.data.user)
+      updateProfile({ name: userName, stats, info })
+    }
+
+    return profile
+  }
+
+  getProfile('ljharb')
+
+  // function updateInterests(userName: string, interests: Profile['interests']) {
+  //   updateProfile({ name: userName, interests })
+  // }
+
+  // function updateRepositories(userName: string, repositories: Profile['repositories']) {
+  //   updateProfile({ name: userName, repositories })
+  // }
 </script>
 
 <div class="manager">
@@ -33,14 +74,6 @@
     <h4>Select profile:</h4>
     <Selector items={['first', 'second', 'third']} on:change={onSwitchProfile} />
   </div>
-  <button
-    class="add"
-    on:click={() => {
-      addProfile('first name')
-      addProfile('second name')
-    }}>Add profile</button
-  >
-  <button class="add" on:click={() => removeProfile('first name')}>Remove profile</button>
 </div>
 
 <Row>

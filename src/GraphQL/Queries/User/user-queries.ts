@@ -1,10 +1,18 @@
 import { gql } from '@apollo/client'
 
 export const QUERY_USER = gql`
-  query User($user: String!, $info: Boolean = false, $stats: Boolean = false) {
+  query User(
+    $user: String!
+    $info: Boolean = false
+    $stats: Boolean = false
+    $repositories: Boolean = false
+    $starredRepositories: Boolean = false
+  ) {
     user(login: $user) {
       ...UserInfo @include(if: $info)
       ...UserStats @include(if: $stats)
+      ...Repositories @include(if: $repositories)
+      ...StarredRepositories @include(if: $starredRepositories)
     }
   }
 
@@ -27,7 +35,7 @@ export const QUERY_USER = gql`
     pullRequests {
       totalCount
     }
-    repositories(
+    repositoriesStats: repositories(
       first: 100
       ownerAffiliations: OWNER
       orderBy: { direction: DESC, field: STARGAZERS }
@@ -46,6 +54,56 @@ export const QUERY_USER = gql`
     }
     issues {
       totalCount
+    }
+  }
+
+  fragment Repositories on User {
+    repositories(
+      ownerAffiliations: [OWNER, COLLABORATOR]
+      first: 100
+      orderBy: { field: STARGAZERS, direction: DESC }
+    ) {
+      nodes {
+        name
+        stargazerCount
+        languages {
+          nodes {
+            name
+          }
+        }
+        repositoryTopics(first: 40) {
+          nodes {
+            topic {
+              name
+            }
+          }
+        }
+        createdAt
+        updatedAt
+        pushedAt
+        isFork
+      }
+    }
+  }
+
+  fragment StarredRepositories on User {
+    starredRepositories {
+      nodes {
+        name
+        stargazerCount
+        languages {
+          nodes {
+            name
+          }
+        }
+        repositoryTopics(first: 40) {
+          nodes {
+            topic {
+              name
+            }
+          }
+        }
+      }
     }
   }
 `

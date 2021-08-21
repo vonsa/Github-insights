@@ -23,7 +23,7 @@ export interface User_user_pullRequests {
   totalCount: number;
 }
 
-export interface User_user_repositories_nodes {
+export interface User_user_repositoriesStats_nodes {
   __typename: "Repository";
   /**
    * Returns a count of how many stargazers there are on this object
@@ -31,7 +31,7 @@ export interface User_user_repositories_nodes {
   stargazerCount: number;
 }
 
-export interface User_user_repositories {
+export interface User_user_repositoriesStats {
   __typename: "RepositoryConnection";
   /**
    * Identifies the total count of items in the connection.
@@ -40,7 +40,7 @@ export interface User_user_repositories {
   /**
    * A list of nodes.
    */
-  nodes: (User_user_repositories_nodes | null)[] | null;
+  nodes: (User_user_repositoriesStats_nodes | null)[] | null;
 }
 
 export interface User_user_followers {
@@ -70,6 +70,158 @@ export interface User_user_issues {
    * Identifies the total count of items in the connection.
    */
   totalCount: number;
+}
+
+export interface User_user_repositories_nodes_languages_nodes {
+  __typename: "Language";
+  /**
+   * The name of the current language.
+   */
+  name: string;
+}
+
+export interface User_user_repositories_nodes_languages {
+  __typename: "LanguageConnection";
+  /**
+   * A list of nodes.
+   */
+  nodes: (User_user_repositories_nodes_languages_nodes | null)[] | null;
+}
+
+export interface User_user_repositories_nodes_repositoryTopics_nodes_topic {
+  __typename: "Topic";
+  /**
+   * The topic's name.
+   */
+  name: string;
+}
+
+export interface User_user_repositories_nodes_repositoryTopics_nodes {
+  __typename: "RepositoryTopic";
+  /**
+   * The topic.
+   */
+  topic: User_user_repositories_nodes_repositoryTopics_nodes_topic;
+}
+
+export interface User_user_repositories_nodes_repositoryTopics {
+  __typename: "RepositoryTopicConnection";
+  /**
+   * A list of nodes.
+   */
+  nodes: (User_user_repositories_nodes_repositoryTopics_nodes | null)[] | null;
+}
+
+export interface User_user_repositories_nodes {
+  __typename: "Repository";
+  /**
+   * The name of the repository.
+   */
+  name: string;
+  /**
+   * Returns a count of how many stargazers there are on this object
+   */
+  stargazerCount: number;
+  /**
+   * A list containing a breakdown of the language composition of the repository.
+   */
+  languages: User_user_repositories_nodes_languages | null;
+  /**
+   * A list of applied repository-topic associations for this repository.
+   */
+  repositoryTopics: User_user_repositories_nodes_repositoryTopics;
+  /**
+   * Identifies the date and time when the object was created.
+   */
+  createdAt: any;
+  /**
+   * Identifies the date and time when the object was last updated.
+   */
+  updatedAt: any;
+  /**
+   * Identifies when the repository was last pushed to.
+   */
+  pushedAt: any | null;
+  /**
+   * Identifies if the repository is a fork.
+   */
+  isFork: boolean;
+}
+
+export interface User_user_repositories {
+  __typename: "RepositoryConnection";
+  /**
+   * A list of nodes.
+   */
+  nodes: (User_user_repositories_nodes | null)[] | null;
+}
+
+export interface User_user_starredRepositories_nodes_languages_nodes {
+  __typename: "Language";
+  /**
+   * The name of the current language.
+   */
+  name: string;
+}
+
+export interface User_user_starredRepositories_nodes_languages {
+  __typename: "LanguageConnection";
+  /**
+   * A list of nodes.
+   */
+  nodes: (User_user_starredRepositories_nodes_languages_nodes | null)[] | null;
+}
+
+export interface User_user_starredRepositories_nodes_repositoryTopics_nodes_topic {
+  __typename: "Topic";
+  /**
+   * The topic's name.
+   */
+  name: string;
+}
+
+export interface User_user_starredRepositories_nodes_repositoryTopics_nodes {
+  __typename: "RepositoryTopic";
+  /**
+   * The topic.
+   */
+  topic: User_user_starredRepositories_nodes_repositoryTopics_nodes_topic;
+}
+
+export interface User_user_starredRepositories_nodes_repositoryTopics {
+  __typename: "RepositoryTopicConnection";
+  /**
+   * A list of nodes.
+   */
+  nodes: (User_user_starredRepositories_nodes_repositoryTopics_nodes | null)[] | null;
+}
+
+export interface User_user_starredRepositories_nodes {
+  __typename: "Repository";
+  /**
+   * The name of the repository.
+   */
+  name: string;
+  /**
+   * Returns a count of how many stargazers there are on this object
+   */
+  stargazerCount: number;
+  /**
+   * A list containing a breakdown of the language composition of the repository.
+   */
+  languages: User_user_starredRepositories_nodes_languages | null;
+  /**
+   * A list of applied repository-topic associations for this repository.
+   */
+  repositoryTopics: User_user_starredRepositories_nodes_repositoryTopics;
+}
+
+export interface User_user_starredRepositories {
+  __typename: "StarredRepositoryConnection";
+  /**
+   * A list of nodes.
+   */
+  nodes: (User_user_starredRepositories_nodes | null)[] | null;
 }
 
 export interface User_user {
@@ -109,7 +261,7 @@ export interface User_user {
   /**
    * A list of repositories that the user owns.
    */
-  repositories: User_user_repositories;
+  repositoriesStats: User_user_repositoriesStats;
   /**
    * A list of users the given user is followed by.
    */
@@ -122,6 +274,14 @@ export interface User_user {
    * A list of issues associated with this user.
    */
   issues: User_user_issues;
+  /**
+   * A list of repositories that the user owns.
+   */
+  repositories: User_user_repositories;
+  /**
+   * Repositories the user has starred.
+   */
+  starredRepositories: User_user_starredRepositories;
 }
 
 export interface User {
@@ -135,4 +295,6 @@ export interface UserVariables {
   user: string;
   info?: boolean | null;
   stats?: boolean | null;
+  repositories?: boolean | null;
+  starredRepositories?: boolean | null;
 }
