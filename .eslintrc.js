@@ -68,5 +68,6 @@ module.exports = {
     ],
     'no-plusplus': 'off',
     'no-restricted-syntax': ['error', 'ForInStatement', 'LabeledStatement', 'WithStatement'],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['draft'] }],
   },
 }
