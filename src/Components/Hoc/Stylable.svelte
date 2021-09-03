@@ -17,7 +17,9 @@
   class="stylable"
   {style}
   on:mouseover={() => applyStyles('hover')}
+  on:focus={() => applyStyles('hover')}
   on:mouseout={() => applyStyles('default')}
+  on:blur={() => applyStyles('default')}
   on:click
 >
   <slot />

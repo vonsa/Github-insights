@@ -1,4 +1,9 @@
-// Place icon files in public/assets/icons
+/*
+  Steps to add an icon to the project:
+  
+    1. Place icon file in public/assets/icons
+    2. Add icon filename to iconsConfig
+*/
 
 const iconsConfig = {
   bottle: 'bottle.svg',

@@ -146,6 +146,10 @@ export interface User_user_repositories_nodes {
    * Identifies if the repository is a fork.
    */
   isFork: boolean;
+  /**
+   * The HTTP URL for this repository
+   */
+  url: any;
 }
 
 export interface User_user_repositories {
@@ -227,13 +231,13 @@ export interface User_user_starredRepositories {
 export interface User_user {
   __typename: "User";
   /**
-   * The user's public profile name.
-   */
-  name: string | null;
-  /**
    * The username used to login.
    */
   login: string;
+  /**
+   * The user's public profile name.
+   */
+  name: string | null;
   /**
    * Identifies the date and time when the object was created.
    */

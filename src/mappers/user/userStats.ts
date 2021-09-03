@@ -1,26 +1,41 @@
-import type { UserStats } from 'src/GraphQL/types/UserStats'
+import type {
+  User_user,
+  User_user_contributionsCollection,
+  User_user_repositoriesStats,
+} from 'src/GraphQL/types/User'
+import type { Profile } from 'src/types/profiles-types'
 
-export function userStatsMapper<T extends UserStats>(user: T) {
+export function userStatsMapper<T extends Partial<User_user>>({
+  followers,
+  contributionsCollection,
+  repositoriesStats,
+  pullRequests,
+  issues,
+}: T): Profile['stats'] | undefined {
+  if (!followers || !contributionsCollection || !repositoriesStats || !pullRequests || !issues) {
+    return undefined
+  }
+
   return {
-    stars: getTotalStars(user),
-    followers: user?.followers.totalCount || 0,
-    repositories: user?.repositoriesStats.totalCount || 0,
-    commits: getTotalCommits(user),
-    pullRequests: user?.pullRequests.totalCount || 0,
-    issues: user?.issues.totalCount || 0,
+    stars: getTotalStars(repositoriesStats),
+    followers: followers.totalCount || 0,
+    repositories: repositoriesStats.totalCount || 0,
+    commits: getTotalCommits(contributionsCollection),
+    pullRequests: pullRequests.totalCount || 0,
+    issues: issues.totalCount || 0,
   }
 }
 
-function getTotalCommits<T extends UserStats>(user: T) {
-  return (
-    user.contributionsCollection.totalCommitContributions +
-    user.contributionsCollection.restrictedContributionsCount
-  )
+function getTotalCommits({
+  totalCommitContributions,
+  restrictedContributionsCount,
+}: User_user_contributionsCollection) {
+  return totalCommitContributions + restrictedContributionsCount
 }
 
-function getTotalStars<T extends UserStats>(user: T) {
-  if (user && user.repositoriesStats.nodes && user.repositoriesStats.nodes) {
-    return user.repositoriesStats.nodes.reduce((prev, curr) => {
+function getTotalStars({ nodes }: User_user_repositoriesStats) {
+  if (nodes) {
+    return nodes.reduce((prev, curr) => {
       if (!curr) return prev
       return prev + curr.stargazerCount
     }, 0)

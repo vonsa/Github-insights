@@ -22,29 +22,3 @@ export const mockProfile = {
   },
   previousSearchResults: [],
 }
-
-export interface Profile {
-  name: string
-  info?: {
-    login: string
-    createdAt: string
-    avatarUrl: string
-    company: string | null
-    websiteUrl: string
-  }
-  stats?: {
-    stars: number
-    followers: number
-    repositories: number
-    commits: number
-    pullRequests: number
-    issues: number
-  }
-  interests?: {
-    languages: string[]
-    frameworks: string[]
-    topics: string[]
-  }
-  repositories?: any[]
-  previousSearchResults?: any[]
-}

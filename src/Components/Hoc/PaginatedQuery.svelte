@@ -1,4 +1,5 @@
 <script lang="ts">
+  /*
   import { gql } from '@apollo/client'
   import type { ObservableQuery } from '@apollo/client'
   import type { DocumentNode } from '@apollo/client'
@@ -49,7 +50,5 @@
   function initialFetch() {
     query = apollo.watchQuery(queryConfig)
   }
+  */
 </script>
-
-<button on:click={initialFetch}>Initial fetch</button>
-<button on:click={fetchMore}>Fetch more</button>

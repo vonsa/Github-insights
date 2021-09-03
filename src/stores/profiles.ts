@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { log } from 'src/debugging/logger'
 import { writable } from 'svelte/store'
-import type { Profile } from './types/profiles-types'
+import type { Profile } from 'src/types/profiles-types'
 
 interface Profiles {
   [key: string]: Profile
@@ -14,25 +14,25 @@ const profiles$ = { subscribe }
 
 function addProfile(user: Profile) {
   update((profiles) => {
-    if (profiles[user.name]) {
+    if (profiles[user.login]) {
       log('Could not add profile to store because it already exists')
       return profiles
     }
 
     return produce(profiles, (draft) => {
-      draft[user.name] = user
+      draft[user.login] = user
     })
   })
 }
 
 function removeProfile(user: Profile) {
   update((profiles) => {
-    if (!profiles[user.name]) {
+    if (!profiles[user.login]) {
       log('Could not remove profile from store because it could not be found')
       return profiles
     }
     return produce(profiles, (draft) => {
-      delete draft[user.name]
+      delete draft[user.login]
     })
   })
 }
@@ -40,7 +40,7 @@ function removeProfile(user: Profile) {
 function updateProfile(user: Profile) {
   update((profiles) => {
     return produce(profiles, (draft) => {
-      draft[user.name] = user
+      draft[user.login] = user
     })
   })
 }

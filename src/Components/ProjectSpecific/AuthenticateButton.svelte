@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { login } from 'src/stores/auth'
+  import { login } from 'src/services/authService'
   import { getBaseUrl } from 'src/util/url'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
 

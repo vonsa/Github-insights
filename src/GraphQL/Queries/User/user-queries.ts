@@ -9,6 +9,7 @@ export const QUERY_USER = gql`
     $starredRepositories: Boolean = false
   ) {
     user(login: $user) {
+      login
       ...UserInfo @include(if: $info)
       ...UserStats @include(if: $stats)
       ...Repositories @include(if: $repositories)
@@ -18,7 +19,6 @@ export const QUERY_USER = gql`
 
   fragment UserInfo on User {
     name
-    login
     createdAt
     avatarUrl
     company
@@ -66,7 +66,7 @@ export const QUERY_USER = gql`
       nodes {
         name
         stargazerCount
-        languages {
+        languages(first: 5) {
           nodes {
             name
           }
@@ -82,6 +82,7 @@ export const QUERY_USER = gql`
         updatedAt
         pushedAt
         isFork
+        url
       }
     }
   }
@@ -91,7 +92,7 @@ export const QUERY_USER = gql`
       nodes {
         name
         stargazerCount
-        languages {
+        languages(first: 5) {
           nodes {
             name
           }

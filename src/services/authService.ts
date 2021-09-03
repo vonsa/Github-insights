@@ -3,7 +3,7 @@ import axios from 'axios'
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
 import { filter, repeatWhen, takeUntil } from 'rxjs/operators'
 import { getUrlWithoutParam } from 'src/util/url'
-import { querystring$, watchParam } from './searchParams'
+import { querystring$, watchParam } from 'src/stores/searchParams'
 
 const tryLogin$ = new Subject()
 const code$ = watchParam('code')

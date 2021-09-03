@@ -6,93 +6,77 @@
   import GridRow from '../Layout/GridRow.svelte'
   import Selector from '../UI/Selector.svelte'
   import Row from '../Layout/Row.svelte'
-  import { profiles$, updateProfile } from 'src/stores/profiles'
   import { topics } from 'src/GraphQL/Queries/Search/search_helpers'
-  import { userStatsMapper } from 'src/mappers/user/userStats'
-  import { userInfoMapper } from 'src/mappers/user/info'
-  import { query } from 'src/GraphQL/apollo'
-  import type { User, UserVariables } from 'src/GraphQL/types/User'
-  import { QUERY_USER } from 'src/GraphQL/Queries/User/user-queries'
+  import List from '../List.svelte'
+  import type { Profile } from 'src/types/profiles-types'
+  import { log } from 'src/debugging/logger'
+  import { onMount } from 'svelte'
+  import { getProfileValues } from 'src/services/profileService'
 
-  export let repositories: RankedItemsProp
-  export let avatar: { src: string; alt: string }
+  let currentUser: string = 'ljharb'
+  let userData: Omit<Required<Profile>, 'interests' | 'previousSearchResults'>
 
-  profiles$.subscribe((profiles) => {
-    console.log({ profiles })
-  })
-
-  function fetchProfile(name: string) {
-    console.log({ name })
+  function getRankedItems(repositories: any): RankedItemsProp {
+    return repositories.slice(0, 3).map((repository: any) => ({
+      label: repository.name,
+      count: repository.stargazerCount,
+    }))
   }
 
   function onSwitchProfile(event: Event) {
-    const value = (event.target as HTMLInputElement).value
-    if (value) {
-      fetchProfile(value)
+    const profileName = (event.target as HTMLInputElement).value
+    if (profileName) {
+      loadProfile(profileName)
     }
   }
 
-  async function getProfile(userName: string) {
-    let profile = $profiles$.find((profile) => profile.name === userName)
+  async function loadProfile(profileName: string) {
+    const profile = await getProfileValues(profileName, ['login', 'info', 'repositories', 'stats'])
 
-    if (!profile) {
-      const response = await query<{ user: User['user'] }, UserVariables>(QUERY_USER, {
-        user: userName,
-        stats: true,
-        info: true,
-        repositories: true,
-        starredRepositories: true,
-      })
-
-      // @TODO: implement repositories and starredRepositories
-
-      if (response.error || !response.data.user) {
-        throw new Error('Could not fetch user from API')
-      }
-
-      const stats = userStatsMapper(response.data.user)
-      const info = userInfoMapper(response.data.user)
-      updateProfile({ name: userName, stats, info })
+    if (profile) {
+      userData = profile
+      currentUser = profileName
+    } else {
+      log('Could not load profile')
     }
-
-    return profile
   }
 
-  getProfile('ljharb')
+  onMount(() => {
+    loadProfile(currentUser)
+  })
 
-  // function updateInterests(userName: string, interests: Profile['interests']) {
-  //   updateProfile({ name: userName, interests })
-  // }
-
-  // function updateRepositories(userName: string, repositories: Profile['repositories']) {
-  //   updateProfile({ name: userName, repositories })
-  // }
+  $: rankedItems = userData?.repositories && getRankedItems(userData.repositories)
 </script>
 
 <div class="manager">
   <div class="selector">
     <h4>Select profile:</h4>
-    <Selector items={['first', 'second', 'third']} on:change={onSwitchProfile} />
+    <Selector items={['ljharb', 'vonsa']} on:change={onSwitchProfile} />
   </div>
 </div>
 
-<Row>
-  <GridRow>
-    <!-- Avatar -->
-    <div class="avatar" slot="left">
-      <Image src={avatar.src} alt={avatar.alt} />
+{#if userData}
+  <Row>
+    <GridRow>
+      <div class="avatar" slot="left">
+        <Image src={userData.info.avatarUrl} alt="avatar" />
+      </div>
+      <div slot="right">
+        <h2 class="name">{userData.login}</h2>
+        <List items={userData.stats} />
+      </div>
+    </GridRow>
+  </Row>
+
+  {#if rankedItems}
+    <div class="repositories">
+      <h2 class="repositories-title">Top repositories</h2>
+      <div class="ranked-items">
+        <RankedItems items={rankedItems} />
+      </div>
     </div>
-    <!-- Current stats -->
-  </GridRow>
-</Row>
-
-<!-- Repositories -->
-<div class="repositories">
-  <h2 class="repositories-title">Top repositories</h2>
-  <div class="ranked-items">
-    <RankedItems items={repositories} />
-  </div>
-</div>
+  {/if}
+{/if}
 
 <!--
     Configurables:

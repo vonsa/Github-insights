@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { token$ } from 'src/stores/auth'
+  import { token$ } from 'src/services/authService'
 </script>
 
 {#if $token$}

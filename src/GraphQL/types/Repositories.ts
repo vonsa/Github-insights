@@ -81,6 +81,10 @@ export interface Repositories_repositories_nodes {
    * Identifies if the repository is a fork.
    */
   isFork: boolean;
+  /**
+   * The HTTP URL for this repository
+   */
+  url: any;
 }
 
 export interface Repositories_repositories {

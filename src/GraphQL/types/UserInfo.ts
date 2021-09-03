@@ -14,10 +14,6 @@ export interface UserInfo {
    */
   name: string | null;
   /**
-   * The username used to login.
-   */
-  login: string;
-  /**
    * Identifies the date and time when the object was created.
    */
   createdAt: any;

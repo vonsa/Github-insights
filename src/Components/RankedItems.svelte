@@ -17,6 +17,8 @@
 
   export let items: RankedItemsProp
 
+  $: formattedItems = getFormattedItems()
+
   function getFormattedItems(): FormattedRankedItem[] {
     return items.map((item, index) => ({ ...item, icon: getIcon((index + 1) as 1 | 2 | 3) }))
   }
@@ -26,4 +28,4 @@
   }
 </script>
 
-<Showcase cards={getFormattedItems()} />
+<Showcase cards={formattedItems} />

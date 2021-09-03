@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-  import { tooltip$ } from '../../use/tooltip/tooltip'
+  import { tooltip$ } from 'src/libs/tooltip/tooltip'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import Suggestions from './Suggestions.svelte'
 

@@ -8,7 +8,7 @@ import {
   ApolloQueryResult,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { logout, promptLogin$, token$ } from 'src/stores/auth'
+import { logout, promptLogin$, token$ } from 'src/services/authService'
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
 

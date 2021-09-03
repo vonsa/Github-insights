@@ -4,10 +4,10 @@
   // import { wrap } from 'svelte-spa-router/wrap'
   import Apollo from './Components/Hoc/Apollo.svelte'
   import AutoRedirect from './Components/Hoc/AutoRedirect.svelte'
-  import './stores/auth'
+  import 'src/services/authService'
   import Modal from './Components/UI/Modal.svelte'
   import AuthenticateButton from './Components/ProjectSpecific/AuthenticateButton.svelte'
-  import { promptLogin$ } from './stores/auth'
+  import { promptLogin$ } from 'src/services/authService'
   // import MouseFollower from './Components/UI/MouseFollower.svelte'
 
   const routes = {

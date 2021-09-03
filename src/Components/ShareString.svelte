@@ -1,6 +1,6 @@
 <script lang="ts">
   import MaskedIcon from './Decoration/MaskedIcon.svelte'
-  import { tooltip$ } from '../use/tooltip/tooltip'
+  import { tooltip$ } from 'src/libs/tooltip/tooltip'
 
   export let text: string
 
