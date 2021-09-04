@@ -3,9 +3,12 @@ $font-primary: 'Roboto', 'sans-serif';
 $font-secondary: 'Ubuntu', sans-serif;
 
 // Colors - SCSS
-$color-white: #fff;
-$color-black: #000;
 $font-primary-color: #000;
+$color-black: var(--color-black);
+$color-white: var(--color-white);
+$color-offwhite: var(--color-offwhite);
+$color-success: var(--color-success);
+$color-error: var(--color-error);
 
 // Margins
 $margin-tiny: 1rem;
@@ -19,6 +22,11 @@ $padding-small: 2rem;
 $padding-medium: 4rem;
 $padding-large: 8rem;
 $padding-giga: 12rem;
+
+//Border-radius
+$border-radius-small: 0.6rem;
+$border-radius-medium: 1.5rem;
+$border-radius-large: 3rem;
 
 // Media queries
 $media-minimum: 380px;
