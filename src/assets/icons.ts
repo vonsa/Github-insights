@@ -14,6 +14,9 @@ const iconsConfig = {
   close: 'close.svg',
   github: 'github.svg',
   star: 'star.svg',
+  error: 'error.svg',
+  info: 'info.svg',
+  success: 'success.svg',
 }
 
 export type Icon = keyof typeof iconsConfig
