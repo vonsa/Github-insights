@@ -17,9 +17,9 @@
 
   export let items: RankedItemsProp
 
-  $: formattedItems = getFormattedItems()
+  $: formattedItems = getFormattedItems(items)
 
-  function getFormattedItems(): FormattedRankedItem[] {
+  function getFormattedItems(items: RankedItemsProp): FormattedRankedItem[] {
     return items.map((item, index) => ({ ...item, icon: getIcon((index + 1) as 1 | 2 | 3) }))
   }
 

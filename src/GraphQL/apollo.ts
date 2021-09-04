@@ -4,8 +4,9 @@ import {
   InMemoryCache,
   HttpLink,
   from,
-  DocumentNode,
   ApolloQueryResult,
+  QueryOptions,
+  OperationVariables,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { logout, promptLogin$, token$ } from 'src/services/authService'
@@ -56,12 +57,10 @@ export const client = new ApolloClient({
   }),
 })
 
-export function query<Response = any, Variables = Record<string, unknown>>(
-  query: DocumentNode,
-  variables: Variables,
+export function query<Response = any>(
+  options: QueryOptions<OperationVariables, Response>,
 ): Promise<ApolloQueryResult<Response>> {
   return client.query<Response>({
-    query,
-    variables,
+    ...options,
   })
 }

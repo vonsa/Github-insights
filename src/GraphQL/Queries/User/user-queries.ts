@@ -1,5 +1,13 @@
 import { gql } from '@apollo/client'
 
+export const QUERY_LOGGED_IN_USERNAME = gql`
+  query Viewer {
+    viewer {
+      login
+    }
+  }
+`
+
 export const QUERY_USER = gql`
   query User(
     $user: String!

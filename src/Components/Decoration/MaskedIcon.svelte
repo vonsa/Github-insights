@@ -6,6 +6,7 @@
 
   export let icon: Icon
   export let size: 'small' | 'medium' | 'large' = 'medium'
+  export let color: string = '#000'
   export let styles: Styles | undefined = undefined
 
   const maskImageSrc = `
@@ -19,7 +20,7 @@
 <Stylable styles={{ width, height, transition: remainingStyles.transition }} on:click>
   <div alt="icon" style={`${maskImageSrc}`} class={`mask ${size}`}>
     <div class="icon">
-      <Stylable styles={remainingStyles} />
+      <Stylable styles={{ 'background-color': color, ...remainingStyles }} />
     </div>
   </div>
 </Stylable>

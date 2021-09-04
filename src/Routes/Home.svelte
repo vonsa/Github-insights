@@ -1,19 +1,12 @@
 <script lang="ts">
   import Tabs from '../Components/UI/Tabs.svelte'
   import { token$ } from 'src/services/authService'
-  import { setParam } from 'src/stores/searchParams'
-  import ShareString from '../Components/ShareString.svelte'
   import AuthenticateButton from '../Components/ProjectSpecific/AuthenticateButton.svelte'
   import MaskedIcon from '../Components/Decoration/MaskedIcon.svelte'
   import Profile from '../Components/Composed/Profile.svelte'
-  import UserStats from '../Components/UserStats.svelte'
 </script>
 
-<Tabs
-  tabs={['Login', 'Waiting', 'View data', 'Create profile', 'Share link']}
-  let:activeTab
-  let:next
->
+<Tabs tabs={['Login', 'Profiles']} let:activeTab let:next>
   {#if activeTab === 0}
     {#if !$token$}
       <h3>The first step is to authenticate using Github</h3>
@@ -30,26 +23,29 @@
         />
       </div>
     {:else}
-      {next()}
+      <h1>Nice, you're logged in!</h1>
+      <div class="buttons">
+        <button class="continue-button" on:click={next}>Continue</button>
+        <AuthenticateButton label="Log in with a different account" />
+      </div>
+      <p>
+        To log in with a different account, make sure you're not logged in to Github with your
+        current account.
+      </p>
     {/if}
   {/if}
   {#if activeTab === 1}
-    <h1>wait</h1>
-  {/if}
-  {#if activeTab === 2}
-    <ShareString text={window.location.href} />
-    <button
-      on:click={() => {
-        setParam('query', 'QUERY_USER')
-        setParam('variables', { user: 'ljharb' })
-      }}>set param</button
-    >
     <Profile />
   {/if}
-  {#if activeTab === 3}
-    <h1>Tab</h1>
-  {/if}
-  {#if activeTab === 4}
-    <UserStats userName="ljharb" />
-  {/if}
 </Tabs>
+
+<style lang="scss">
+  @import 'src/scss/_variables.scss';
+  .buttons {
+    display: flex;
+
+    & > :not(:last-child) {
+      margin-right: $margin-small;
+    }
+  }
+</style>

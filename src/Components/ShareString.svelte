@@ -1,6 +1,6 @@
 <script lang="ts">
   import MaskedIcon from './Decoration/MaskedIcon.svelte'
-  import { tooltip$ } from 'src/libs/tooltip/tooltip'
+  import { showTooltip } from 'src/libs/tooltip/tooltip'
 
   export let text: string
 
@@ -8,11 +8,11 @@
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        tooltip$.next({ title: 'Copied successfully!' })
+        showTooltip({ title: 'Copied successfully!' })
       })
       .catch((err) => {
         console.error('Something went wrong', err)
-        tooltip$.next({ title: 'Could not copy automatically, please try it manually.' })
+        showTooltip({ title: 'Could not copy automatically, please try it manually.' })
       })
   }
 </script>

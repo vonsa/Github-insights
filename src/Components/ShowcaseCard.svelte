@@ -3,6 +3,7 @@
     icon: Icon
     label: string
     count: number
+    url?: string
   }
 </script>
 
@@ -13,18 +14,21 @@
   export let icon: Icon
   export let label: string
   export let count: number
+  export let url: string | undefined = undefined
 </script>
 
-<div class="container">
-  <div class="card">
-    <MaskedIcon {icon} styles={{ width: { default: '60%' } }} />
-    <h4 class="label">{label}</h4>
-    <div class="count">
-      <h2 class="count-title">{count}</h2>
-      <MaskedIcon icon="star" />
+<a href={url}>
+  <div class="container">
+    <div class="card">
+      <MaskedIcon {icon} styles={{ width: { default: '60%' } }} />
+      <h4 class="label">{label}</h4>
+      <div class="count">
+        <h2 class="count-title">{count}</h2>
+        <MaskedIcon icon="star" />
+      </div>
     </div>
   </div>
-</div>
+</a>
 
 <style lang="scss">
   @import '../scss/_mixins.scss';

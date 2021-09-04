@@ -1,25 +1,35 @@
 <script lang="ts">
-  import ListWithSuggestions from '../UI/ListWithSuggestions.svelte'
   import Image from '../Image.svelte'
   import RankedItems from '../RankedItems.svelte'
   import type { RankedItemsProp } from '../RankedItems.svelte'
   import GridRow from '../Layout/GridRow.svelte'
   import Selector from '../UI/Selector.svelte'
   import Row from '../Layout/Row.svelte'
-  import { topics } from 'src/GraphQL/Queries/Search/search_helpers'
   import List from '../List.svelte'
   import type { Profile } from 'src/types/profiles-types'
   import { log } from 'src/debugging/logger'
-  import { onMount } from 'svelte'
   import { getProfileValues } from 'src/services/profileService'
+  import Spinner from '../UI/Spinner.svelte'
+  import { notify } from 'src/services/notificationService'
+  import { profiles$ } from 'src/stores/profiles'
+  import { login$ } from 'src/services/authService'
 
-  let currentUser: string = 'ljharb'
+  let activeProfile: string
   let userData: Omit<Required<Profile>, 'interests' | 'previousSearchResults'>
+  let loading: boolean
+  let profileInput: string
 
-  function getRankedItems(repositories: any): RankedItemsProp {
+  $: console.log({ activeProfile })
+
+  $: if ($login$) loadProfile($login$)
+  $: storedProfiles = Object.keys($profiles$)
+  $: rankedItems = userData?.repositories && mapToRankedItems(userData.repositories)
+
+  function mapToRankedItems(repositories: any): RankedItemsProp {
     return repositories.slice(0, 3).map((repository: any) => ({
       label: repository.name,
       count: repository.stargazerCount,
+      url: repository.url,
     }))
   }
 
@@ -31,60 +41,79 @@
   }
 
   async function loadProfile(profileName: string) {
-    const profile = await getProfileValues(profileName, ['login', 'info', 'repositories', 'stats'])
+    loading = true
+    let profile
+    try {
+      profile = await getProfileValues(profileName, ['login', 'info', 'repositories', 'stats'])
+    } catch (err) {
+      notify({ title: 'Sorry, we could not retrieve your profile.', type: 'ERROR' })
+      console.warn(err)
+    }
+
+    loading = false
 
     if (profile) {
       userData = profile
-      currentUser = profileName
+      activeProfile = profileName
     } else {
       log('Could not load profile')
     }
   }
 
-  onMount(() => {
-    loadProfile(currentUser)
-  })
+  function addProfile(profile: string) {
+    if (!profile) {
+      notify({ title: 'Profile field may not be empty', type: 'ERROR' })
+      return
+    }
 
-  $: rankedItems = userData?.repositories && getRankedItems(userData.repositories)
+    loadProfile(profile)
+
+    profileInput = ''
+  }
 </script>
 
 <div class="manager">
+  <div class="add-profile">
+    <input class="add-profile-input" type="text" bind:value={profileInput} />
+    <button class="add-profile-btn" on:click={() => addProfile(profileInput)}>Add profile</button>
+  </div>
   <div class="selector">
     <h4>Select profile:</h4>
-    <Selector items={['ljharb', 'vonsa']} on:change={onSwitchProfile} />
+    <Selector items={storedProfiles} selected={activeProfile} on:change={onSwitchProfile} />
   </div>
 </div>
 
-{#if userData}
-  <Row>
-    <GridRow>
-      <div class="avatar" slot="left">
-        <Image src={userData.info.avatarUrl} alt="avatar" />
-      </div>
-      <div slot="right">
-        <h2 class="name">{userData.login}</h2>
-        <List items={userData.stats} />
-      </div>
-    </GridRow>
-  </Row>
+<div class="container">
+  {#if loading && !userData}
+    <Spinner />
+  {:else if userData}
+    <Row>
+      <GridRow>
+        <div class="avatar" slot="left">
+          <Image src={userData.info.avatarUrl} alt="avatar" />
+        </div>
+        <div slot="right">
+          <h2 class="name">{userData.login}</h2>
+          <List items={userData.stats} />
+        </div>
+      </GridRow>
+    </Row>
 
-  {#if rankedItems}
-    <div class="repositories">
-      <h2 class="repositories-title">Top repositories</h2>
-      <div class="ranked-items">
-        <RankedItems items={rankedItems} />
+    {#if rankedItems}
+      <div class="repositories">
+        <h2 class="repositories-title">Top repositories</h2>
+        <div class="ranked-items">
+          <RankedItems items={rankedItems} />
+        </div>
       </div>
-    </div>
+    {/if}
+
+    {#if loading}
+      <div class="loading-overlay" />
+      <Spinner />
+    {/if}
   {/if}
-{/if}
-
-<!--
-    Configurables:
-    Languages
-    Frameworks
--->
-
-<ListWithSuggestions suggestions={topics} />
+</div>
 
 <style lang="scss">
   @import 'src/scss/_variables.scss';
@@ -109,5 +138,14 @@
         margin-right: $margin-medium;
       }
     }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    top: 0;
+    left: 0;
   }
 </style>

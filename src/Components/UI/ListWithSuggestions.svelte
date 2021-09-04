@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-  import { tooltip$ } from 'src/libs/tooltip/tooltip'
+  import { showTooltip } from 'src/libs/tooltip/tooltip'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import Suggestions from './Suggestions.svelte'
 
@@ -28,10 +28,10 @@
 
   function addToSelection(selected: string) {
     if (selection.includes(selected)) {
-      tooltip$.next({ title: 'Already selected!', type: 'ERROR' })
+      showTooltip({ title: 'Already selected!', type: 'ERROR' })
       return
     } else if (selected === '' || selected === undefined) {
-      tooltip$.next({ title: 'Input may not be empty', type: 'ERROR' })
+      showTooltip({ title: 'Input may not be empty', type: 'ERROR' })
       return
     }
 

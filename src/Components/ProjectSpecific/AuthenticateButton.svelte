@@ -4,20 +4,23 @@
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
 
   export let redirectUrl = getBaseUrl()
+  export let label = 'Authenticate using Github'
 </script>
 
 <button on:click={() => login(redirectUrl)} on:click
   ><div class="icon">
     <MaskedIcon icon="github" size="small" styles={{ 'background-color': '#fff' }} />
   </div>
-  Authenticate using Github</button
+  {label}</button
 >
 
 <style lang="scss">
+  @import 'src/scss/_variables.scss';
   button {
     display: flex;
     align-items: center;
-    background: #000;
+    background: $color-black;
+    color: $color-white;
   }
 
   .icon {

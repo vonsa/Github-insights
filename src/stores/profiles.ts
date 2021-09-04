@@ -4,7 +4,7 @@ import { writable } from 'svelte/store'
 import type { Profile } from 'src/types/profiles-types'
 
 interface Profiles {
-  [key: string]: Profile
+  [login: string]: Profile
 }
 
 const profileStore = writable<Profiles>({})

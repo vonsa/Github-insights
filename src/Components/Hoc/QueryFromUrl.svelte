@@ -12,7 +12,7 @@
 </script>
 
 {#if $params$ && queries[$queryParam$]}
-  {#await query(queries[$queryParam$], { ...$variables$ })}
+  {#await query({ query: queries[$queryParam$], variables: $variables$ })}
     <Spinner />
   {:then data}
     <slot {data} />
