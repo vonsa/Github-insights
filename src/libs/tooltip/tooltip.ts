@@ -12,20 +12,21 @@ import {
 } from 'rxjs/operators'
 import anime from 'animejs'
 import { filterNullish } from 'src/util/filter'
+import type { NotificationConfig } from 'src/types/notification'
 import Tooltip from './TooltipFromAction.svelte'
 
-export type TooltipType = 'DEFAULT' | 'ERROR'
-
-interface TooltipConfig {
+interface TooltipConfig extends Partial<NotificationConfig> {
   title: string
-  type?: TooltipType
-  time?: number
   animationDuration?: number
   TooltipComponent?: any
   onComplete?: () => void
 }
 
-export const tooltip$ = new Subject<TooltipConfig>()
+const tooltip$ = new Subject<TooltipConfig>()
+
+export function showTooltip(options: TooltipConfig) {
+  tooltip$.next(options)
+}
 
 const selector = `tooltip`
 const defaultTime = 3000

@@ -8,7 +8,7 @@
   import Modal from './Components/UI/Modal.svelte'
   import AuthenticateButton from './Components/ProjectSpecific/AuthenticateButton.svelte'
   import { promptLogin$ } from 'src/services/authService'
-  // import MouseFollower from './Components/UI/MouseFollower.svelte'
+  import Notifications from './Components/UI/Notifications.svelte'
 
   const routes = {
     '/': Home,
@@ -47,3 +47,5 @@
     <AuthenticateButton />
   </Modal>
 {/if}
+
+<Notifications />

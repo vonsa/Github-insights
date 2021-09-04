@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import type { TooltipType } from './tooltip'
+  import type { NotificationConfig } from 'src/types/notification'
 
   export let title: string
   export let x: number
   export let y: number
   export let selector: string
-  export let type: TooltipType = 'DEFAULT'
+  export let type: NotificationConfig['type'] = 'DEFAULT'
 
   let timeout: ReturnType<typeof window.setTimeout>
   let tooltip: HTMLElement
