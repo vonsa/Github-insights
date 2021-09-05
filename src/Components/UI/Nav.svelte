@@ -5,4 +5,4 @@
   export let location: string
 </script>
 
-<a href={location} use:link>{label}</a>
+<a href={location} use:link on:click>{label}</a>

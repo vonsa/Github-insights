@@ -10,3 +10,15 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+@mixin media-medium {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin media-large {
+  @media screen and (min-width: 1000px) {
+    @content;
+  }
+}
