@@ -5,7 +5,7 @@ export function notify(
   config: { title: NotificationConfig['title'] } & Partial<NotificationConfig>,
 ) {
   const defaultConfig = {
-    time: 2000,
+    time: 3000,
     type: 'DEFAULT',
   } as const
 

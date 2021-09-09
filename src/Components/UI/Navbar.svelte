@@ -1,19 +1,10 @@
-<script lang="ts" context="module">
-  import type { Icon } from 'src/assets/icons'
-
-  export interface NavbarItem {
-    label: string
-    location: string
-    mobileIcon?: Icon
-  }
-</script>
-
 <script lang="ts">
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import { fade } from 'svelte/transition'
 
   import Image from '../Image.svelte'
   import Nav from './Nav.svelte'
+  import type { NavbarItem } from './types/Navbar'
 
   export let items: NavbarItem[]
   export let logo: string
@@ -29,25 +20,25 @@
   <div class="logo-container">
     <Image src={logo} alt="logo" />
   </div>
-  <div class="items-desktop">
-    {#each items as { label, location }}
-      <div class="item">
-        <Nav {label} {location} />
+  <div class="items items-desktop">
+    {#each items as { label, location, action }}
+      <div class="item item-desktop">
+        <Nav {label} {location} {action} />
       </div>
     {/each}
   </div>
   <button class="mobile-toggle" on:click={toggleMobileMenu}>=</button>
   {#if mobileMenuToggled}
     <div class="mobile-menu" in:fade out:fade>
-      <div class="items-mobile">
-        {#each items as { label, location, mobileIcon }}
-          <div class="item">
+      <div class="items items-mobile">
+        {#each items as { label, location, mobileIcon, action }}
+          <div class="item item-mobile">
             {#if mobileIcon}
               <div class="mobile-icon">
                 <MaskedIcon icon={mobileIcon} />
               </div>
             {/if}
-            <Nav {label} {location} on:click={toggleMobileMenu} />
+            <Nav {label} {location} {action} on:click={toggleMobileMenu} />
           </div>
         {/each}
       </div>
@@ -114,6 +105,18 @@
       position: absolute;
       top: 2rem;
       right: 2rem;
+    }
+
+    & .items-mobile {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      & .item-mobile {
+        &:not(:last-child) {
+          margin-bottom: $margin-small;
+        }
+      }
     }
   }
 </style>

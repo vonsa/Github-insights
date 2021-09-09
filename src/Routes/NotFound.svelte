@@ -1,10 +1,7 @@
 <script lang="ts">
   import Route from '../Components/Hoc/Route.svelte'
-  import { logout } from 'src/services/authService'
-
-  logout()
 </script>
 
 <Route>
-  <h1>Logout!</h1>
+  <h1>Page could not be found</h1>
 </Route>

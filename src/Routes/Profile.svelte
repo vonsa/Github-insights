@@ -1,18 +1,20 @@
 <script lang="ts">
-  import Image from '../Image.svelte'
-  import RankedItems from '../RankedItems.svelte'
-  import type { RankedItemsProp } from '../RankedItems.svelte'
-  import GridRow from '../Layout/GridRow.svelte'
-  import Selector from '../UI/Selector.svelte'
-  import Row from '../Layout/Row.svelte'
-  import List from '../List.svelte'
+  import Image from '../Components/Image.svelte'
+  import RankedItems from '../Components/RankedItems.svelte'
+  import type { RankedItemsProp } from '../Components/RankedItems.svelte'
+  import GridRow from '../Components/Layout/GridRow.svelte'
+  import Selector from '../Components/UI/Selector.svelte'
+  import Row from '../Components/Layout/Row.svelte'
+  import List from '../Components/List.svelte'
   import type { Profile } from 'src/types/profiles-types'
   import { log } from 'src/debugging/logger'
   import { getProfileValues } from 'src/services/profileService'
-  import Spinner from '../UI/Spinner.svelte'
+  import Spinner from '../Components/UI/Spinner.svelte'
   import { notify } from 'src/services/notificationService'
   import { profiles$ } from 'src/stores/profiles'
-  import { login$ } from 'src/services/authService'
+  import { login$, token$ } from 'src/services/authService'
+  import Route from '../Components/Hoc/Route.svelte'
+  import { replace } from 'svelte-spa-router'
 
   let activeProfile: string
   let userData: Omit<Required<Profile>, 'interests' | 'previousSearchResults'>
@@ -24,6 +26,10 @@
   $: if ($login$) loadProfile($login$)
   $: storedProfiles = Object.keys($profiles$)
   $: rankedItems = userData?.repositories && mapToRankedItems(userData.repositories)
+  $: if (!$token$) {
+    notify({ title: 'You have been logged out.' })
+    replace('/')
+  }
 
   function mapToRankedItems(repositories: any): RankedItemsProp {
     return repositories.slice(0, 3).map((repository: any) => ({
@@ -72,48 +78,50 @@
   }
 </script>
 
-<div class="manager">
-  <div class="add-profile">
-    <input class="add-profile-input" type="text" bind:value={profileInput} />
-    <button class="add-profile-btn" on:click={() => addProfile(profileInput)}>Add profile</button>
+<Route>
+  <div class="manager">
+    <div class="add-profile">
+      <input class="add-profile-input" type="text" bind:value={profileInput} />
+      <button class="add-profile-btn" on:click={() => addProfile(profileInput)}>Add profile</button>
+    </div>
+    <div class="selector">
+      <h4>Select profile:</h4>
+      <Selector items={storedProfiles} selected={activeProfile} on:change={onSwitchProfile} />
+    </div>
   </div>
-  <div class="selector">
-    <h4>Select profile:</h4>
-    <Selector items={storedProfiles} selected={activeProfile} on:change={onSwitchProfile} />
-  </div>
-</div>
 
-<div class="container">
-  {#if loading && !userData}
-    <Spinner />
-  {:else if userData}
-    <Row>
-      <GridRow>
-        <div class="avatar" slot="left">
-          <Image src={userData.info.avatarUrl} alt="avatar" />
-        </div>
-        <div slot="right">
-          <h2 class="name">{userData.login}</h2>
-          <List items={userData.stats} />
-        </div>
-      </GridRow>
-    </Row>
-
-    {#if rankedItems}
-      <div class="repositories">
-        <h2 class="repositories-title">Top repositories</h2>
-        <div class="ranked-items">
-          <RankedItems items={rankedItems} />
-        </div>
-      </div>
-    {/if}
-
-    {#if loading}
-      <div class="loading-overlay" />
+  <div class="container">
+    {#if loading && !userData}
       <Spinner />
+    {:else if userData}
+      <Row>
+        <GridRow>
+          <div class="avatar" slot="left">
+            <Image src={userData.info.avatarUrl} alt="avatar" />
+          </div>
+          <div slot="right">
+            <h2 class="name">{userData.login}</h2>
+            <List items={userData.stats} />
+          </div>
+        </GridRow>
+      </Row>
+
+      {#if rankedItems}
+        <div class="repositories">
+          <h2 class="repositories-title">Top repositories</h2>
+          <div class="ranked-items">
+            <RankedItems items={rankedItems} />
+          </div>
+        </div>
+      {/if}
+
+      {#if loading}
+        <div class="loading-overlay" />
+        <Spinner />
+      {/if}
     {/if}
-  {/if}
-</div>
+  </div>
+</Route>
 
 <style lang="scss">
   @import 'src/scss/_variables.scss';
