@@ -9,11 +9,18 @@
 
 <style lang="scss">
   @import 'src/scss/_variables.scss';
+  @import 'src/scss/_mixins.scss';
 
   .grid {
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: 100%;
-    column-gap: $column-gap-small;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    row-gap: $column-gap-small;
+
+    @include media-small {
+      grid-template-columns: auto 1fr;
+      grid-template-rows: 100%;
+      column-gap: $column-gap-small;
+    }
   }
 </style>

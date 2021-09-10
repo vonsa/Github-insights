@@ -23,4 +23,12 @@
 </select>
 
 <style lang="scss">
+  @import 'src/scss/_mixins.scss';
+
+  select,
+  select:focus,
+  select:focus-visible {
+    @include input;
+    outline: none;
+  }
 </style>

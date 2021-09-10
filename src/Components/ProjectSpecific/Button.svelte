@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { login } from 'src/services/authService'
-  import { getBaseUrl } from 'src/util/url'
+  import type { Icon } from 'src/assets/icons'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
 
-  export let redirectUrl = getBaseUrl()
-  export let label = 'Authenticate using Github'
+  export let label: string
+  export let icon: Icon | undefined = undefined
 </script>
 
-<button on:click={() => login(redirectUrl)} on:click
-  ><div class="icon">
-    <MaskedIcon icon="github" size="small" styles={{ 'background-color': '#fff' }} />
-  </div>
+<button on:click>
+  {#if icon}
+    <div class="icon">
+      <MaskedIcon {icon} size="small" styles={{ 'background-color': '#fff' }} />
+    </div>
+  {/if}
   {label}</button
 >
 
