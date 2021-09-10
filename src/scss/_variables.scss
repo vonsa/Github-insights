@@ -5,6 +5,7 @@ $font-secondary: 'Ubuntu', sans-serif;
 // Colors - SCSS
 $font-primary-color: #000;
 $color-black: var(--color-black);
+$color-grey: var(--color-grey);
 $color-white: var(--color-white);
 $color-offwhite: var(--color-offwhite);
 $color-success: var(--color-success);
@@ -17,6 +18,7 @@ $margin-medium: 4rem;
 $margin-large: 8rem;
 
 // Padding
+$padding-minimal: 0.8rem;
 $padding-tiny: 1rem;
 $padding-small: 2rem;
 $padding-medium: 4rem;
@@ -44,3 +46,6 @@ $column-gap-small: 2rem;
 $column-gap-medium: 4rem;
 $row-gap-small: 2rem;
 $row-gap-medium: 4rem;
+
+// Elements
+$navbar-height: 6rem;

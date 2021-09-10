@@ -398,4 +398,13 @@ button {
   font-family: inherit;
   padding: 0;
   cursor: pointer;
+  color: inherit;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+  color: inherit;
+  text-decoration: inherit;
 }

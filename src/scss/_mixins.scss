@@ -1,3 +1,5 @@
+@import './variables';
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -11,6 +13,12 @@
   transform: translate(-50%, -50%);
 }
 
+@mixin media-small {
+  @media screen and (min-width: 480px) {
+    @content;
+  }
+}
+
 @mixin media-medium {
   @media screen and (min-width: 768px) {
     @content;
@@ -22,3 +30,29 @@
     @content;
   }
 }
+
+@mixin button {
+  padding: $padding-tiny;
+  border-radius: $border-radius-small;
+}
+
+@mixin input {
+  padding: calc(#{$padding-tiny} - 1px);
+  border-radius: $border-radius-small;
+  border: 1px solid $color-grey;
+  margin: 0;
+}
+
+@mixin text-input {
+  all: inherit;
+  display: inline-block;
+  @include input;
+}
+
+// @mixin hover-slide {
+//   transition: all 0.4s ease;
+
+//   &:hover {
+//     transform: translate(-0.5rem, -0.5rem);
+//   }
+// }
