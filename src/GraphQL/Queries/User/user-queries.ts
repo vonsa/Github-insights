@@ -31,6 +31,7 @@ export const QUERY_USER = gql`
     avatarUrl
     company
     websiteUrl
+    url
   }
 
   fragment UserStats on User {

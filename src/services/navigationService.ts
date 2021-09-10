@@ -1,4 +1,4 @@
-import { replace } from 'svelte-spa-router'
+import { push as pushTo, replace } from 'svelte-spa-router'
 import { wrap } from 'svelte-spa-router/wrap'
 import { map, Observable } from 'rxjs'
 import { login, logout, token$ } from 'src/services/authService'
@@ -33,10 +33,14 @@ function getNavItems(loggedIn: boolean) {
   ]
 }
 
+function push(location: keyof typeof routes) {
+  return pushTo(location)
+}
+
 function conditionsFailed() {
   log('conditionsFailed event, redirecting to /not-allowed')
 
   replace('/not-allowed')
 }
 
-export { navItems$, routes, conditionsFailed }
+export { navItems$, routes, conditionsFailed, push }

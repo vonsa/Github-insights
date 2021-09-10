@@ -2,26 +2,19 @@ import type { User_user } from 'src/GraphQL/types/User'
 import type { Profile } from 'src/types/profiles-types'
 
 export function userInfoMapper({
+  name,
   avatarUrl,
   company,
   createdAt,
-  login,
   websiteUrl,
+  url,
 }: Partial<User_user>): Profile['info'] | undefined {
-  if (
-    !avatarUrl ||
-    (!company && company !== null) ||
-    !createdAt ||
-    !login ||
-    (!websiteUrl && websiteUrl !== null)
-  )
-    return undefined
-
   return {
+    name: name || null,
     avatarUrl,
-    company,
+    company: company || null,
     createdAt,
-    login,
     websiteUrl,
+    url,
   }
 }

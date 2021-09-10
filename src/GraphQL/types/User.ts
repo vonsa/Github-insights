@@ -255,6 +255,10 @@ export interface User_user {
    */
   websiteUrl: any | null;
   /**
+   * The HTTP URL for this user
+   */
+  url: any;
+  /**
    * A list of repositories that the user recently contributed to.
    */
   repositoriesContributedTo: User_user_repositoriesContributedTo;

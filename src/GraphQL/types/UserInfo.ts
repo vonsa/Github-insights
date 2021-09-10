@@ -29,4 +29,8 @@ export interface UserInfo {
    * A URL pointing to the user's public website/blog.
    */
   websiteUrl: any | null;
+  /**
+   * The HTTP URL for this user
+   */
+  url: any;
 }

@@ -1,12 +1,8 @@
+import type { UserInfo } from 'src/GraphQL/types/UserInfo'
+
 export interface Profile {
   login: string
-  info?: {
-    login: string
-    createdAt: string
-    avatarUrl: string
-    company: string | null
-    websiteUrl: string
-  }
+  info?: Omit<UserInfo, '__typename'>
   stats?: {
     stars: number
     followers: number
