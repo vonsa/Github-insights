@@ -7,7 +7,10 @@
 </script>
 
 {#if location}
-  <a href={location} use:link on:click>{label}</a>
+  <a href={location} use:link on:click class="link">{label}</a>
 {:else if action}
-  <button on:click={action} on:click>{label}</button>
+  <button on:click on:click={action} class="link">{label}</button>
 {/if}
+
+<style lang="scss">
+</style>

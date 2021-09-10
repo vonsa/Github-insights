@@ -1,49 +1,52 @@
 <script lang="ts">
-  import Tabs from '../Components/UI/Tabs.svelte'
-  import { token$ } from 'src/services/authService'
-  import AuthenticateButton from '../Components/ProjectSpecific/AuthenticateButton.svelte'
-  import MaskedIcon from '../Components/Decoration/MaskedIcon.svelte'
+  import { login, token$ } from 'src/services/authService'
   import Route from '../Components/Hoc/Route.svelte'
+  import Button from '../Components/ProjectSpecific/Button.svelte'
+  import { getBaseUrl } from 'src/util/url'
+  import { push } from 'src/services/navigationService'
 </script>
 
 <Route>
-  <Tabs tabs={['Login', 'Profiles']} let:activeTab let:next>
-    {#if activeTab === 0}
-      {#if !$token$}
-        <h3>The first step is to authenticate using Github</h3>
-        <AuthenticateButton />
-        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-          <MaskedIcon
-            icon="bottle"
-            styles={{
-              width: { default: '2rem', hover: '80rem' },
-              height: { default: '2rem', hover: '80rem' },
-              'background-color': { default: 'black', hover: 'red' },
-              transition: { default: 'all 0.4s ease-in-out' },
-            }}
-          />
-        </div>
-      {:else}
-        <h1>Nice, you're logged in!</h1>
-        <div class="buttons">
-          <button class="continue-button" on:click={next}>Continue</button>
-        </div>
-        <p>
-          To log in with a different account, make sure you're not logged in to Github with your
-          current account.
-        </p>
-      {/if}
+  <div class="container">
+    <div class="intro">
+      <h1>Check your Github stats!</h1>
+      <p>
+        It's easy, just authorize yourself using your Github account and view your profile stats.
+        You can also search for other profiles.
+      </p>
+    </div>
+    {#if !$token$}
+      <Button
+        icon="github"
+        label="Authenticate using Github"
+        on:click={() => login(getBaseUrl())}
+      />
+    {:else}
+      <div class="buttons">
+        <Button label="View your profile" on:click={() => push('/profiles')} />
+      </div>
     {/if}
-  </Tabs>
+  </div>
 </Route>
 
 <style lang="scss">
   @import 'src/scss/_variables.scss';
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+  }
+
+  .intro {
+    margin-bottom: $margin-small;
+  }
   .buttons {
     display: flex;
-
-    & > :not(:last-child) {
-      margin-right: $margin-small;
-    }
   }
 </style>

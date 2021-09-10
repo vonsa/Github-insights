@@ -15,13 +15,11 @@
   import { login$, token$ } from 'src/services/authService'
   import Route from '../Components/Hoc/Route.svelte'
   import { replace } from 'svelte-spa-router'
+  import Input from '../Components/UI/Input.svelte'
 
   let activeProfile: string
   let userData: Omit<Required<Profile>, 'interests' | 'previousSearchResults'>
   let loading: boolean
-  let profileInput: string
-
-  $: console.log({ activeProfile })
 
   $: if ($login$) loadProfile($login$)
   $: storedProfiles = Object.keys($profiles$)
@@ -73,31 +71,36 @@
     }
 
     loadProfile(profile)
-
-    profileInput = ''
   }
 </script>
 
 <Route>
   <div class="manager">
-    <div class="add-profile">
-      <input class="add-profile-input" type="text" bind:value={profileInput} />
-      <button class="add-profile-btn" on:click={() => addProfile(profileInput)}>Add profile</button>
+    <div class="container">
+      <h1>Profiles</h1>
+      <div class="manage-profiles">
+        <div class="add-profile input">
+          <Input
+            buttonLabel="Search"
+            placeholder="Search for profile name"
+            on:submit={(e) => addProfile(e.detail)}
+          />
+        </div>
+        <div class="profile-select input">
+          <h4 class="select-label">Switch profile:</h4>
+          <Selector items={storedProfiles} selected={activeProfile} on:change={onSwitchProfile} />
+        </div>
+      </div>
     </div>
-    <div class="selector">
-      <h4>Select profile:</h4>
-      <Selector items={storedProfiles} selected={activeProfile} on:change={onSwitchProfile} />
-    </div>
-  </div>
-
-  <div class="container">
     {#if loading && !userData}
       <Spinner />
     {:else if userData}
       <Row>
         <GridRow>
           <div class="avatar" slot="left">
-            <Image src={userData.info.avatarUrl} alt="avatar" />
+            <a href={userData.info.url}>
+              <Image src={userData.info.avatarUrl} alt="avatar" />
+            </a>
           </div>
           <div slot="right">
             <h2 class="name">{userData.login}</h2>
@@ -125,19 +128,44 @@
 
 <style lang="scss">
   @import 'src/scss/_variables.scss';
+  @import 'src/scss/_mixins.scss';
 
-  .selector {
+  .manage-profiles {
     display: flex;
+    align-items: center;
+    margin-bottom: $margin-small;
+    justify-content: space-between;
+    max-width: 58rem;
+    flex-wrap: wrap;
+    gap: $margin-small;
+
+    & .add-profile {
+      margin-right: $margin-small;
+    }
+
+    & .profile-select {
+      display: flex;
+      align-items: center;
+
+      & .select-label {
+        margin-right: $margin-small;
+      }
+    }
   }
 
   .avatar {
-    width: 30rem;
-    height: 30rem;
+    width: 20rem;
+    height: 20rem;
+
+    @include media-medium {
+      width: 24rem;
+      height: 24rem;
+    }
   }
 
   .repositories {
     & .repositories-title {
-      margin-bottom: $margin-medium;
+      margin-bottom: $margin-small;
     }
 
     & .ranked-items {
@@ -146,6 +174,10 @@
         margin-right: $margin-medium;
       }
     }
+  }
+
+  .name {
+    margin-bottom: $margin-small;
   }
 
   .loading-overlay {

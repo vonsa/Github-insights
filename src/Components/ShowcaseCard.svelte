@@ -10,6 +10,8 @@
 <script lang="ts">
   import MaskedIcon from './Decoration/MaskedIcon.svelte'
   import type { Icon } from 'src/assets/icons'
+  import { icons } from 'src/assets/icons'
+  import Image from './Image.svelte'
 
   export let icon: Icon
   export let label: string
@@ -20,11 +22,14 @@
 <a href={url}>
   <div class="container">
     <div class="card">
-      <MaskedIcon {icon} styles={{ width: { default: '60%' } }} />
+      <div class="image">
+        <Image src={icons[icon]} alt="Rank icon" contain />
+      </div>
+      <!-- <MaskedIcon {icon} styles={{ width: { default: '60%' } }} /> -->
       <h4 class="label">{label}</h4>
       <div class="count">
         <h2 class="count-title">{count}</h2>
-        <MaskedIcon icon="star" />
+        <MaskedIcon icon="star" styles={{ width: '2.4rem', height: '2.4rem' }} color="crimson" />
       </div>
     </div>
   </div>
@@ -35,9 +40,9 @@
   @import '../scss/_variables.scss';
 
   .container {
-    width: 300px;
-    height: 300px;
-    padding: 2rem;
+    width: 26rem;
+    height: 100%;
+    padding: $padding-small;
     @include flex-center;
   }
 
@@ -52,6 +57,13 @@
     width: 100%;
     height: 100%;
     text-align: center;
+    // @include hover-slide;
+
+    & .image {
+      width: 9rem;
+      height: 9rem;
+      margin-bottom: $margin-small;
+    }
   }
 
   .label {
@@ -60,6 +72,7 @@
 
   .count {
     display: flex;
+    align-items: center;
   }
   .count-title {
     font-family: $font-primary;

@@ -10,6 +10,18 @@
   export let cards: ShowcaseCards
 </script>
 
-{#each cards as card}
-  <ShowcaseCardComponent {...card} />
-{/each}
+<div class="cards">
+  {#each cards as card}
+    <div class="card">
+      <ShowcaseCardComponent {...card} />
+    </div>
+  {/each}
+</div>
+
+<style lang="scss">
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+</style>

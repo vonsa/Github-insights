@@ -56,6 +56,9 @@
     padding: $padding-tiny;
     background: $color-offwhite;
     justify-content: space-between;
+    height: $navbar-height;
+    background-color: $color-black;
+    color: $color-white;
 
     @include media-medium {
       justify-content: flex-start;
@@ -74,6 +77,10 @@
       display: flex;
     }
 
+    & .item {
+      color: $color-white;
+    }
+
     & .item:not(:last-child) {
       margin-right: $margin-small;
     }
@@ -86,7 +93,7 @@
   }
 
   .mobile-menu {
-    background: $color-white;
+    background: $color-black;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -95,6 +102,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     z-index: 100;
 
     @include media-medium {
