@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
+  import Button from '../ProjectSpecific/Button.svelte'
 
   export let buttonLabel: string
   export let placeholder: string = ''
@@ -25,17 +26,10 @@
     }
   }}
 />
-<button class="btn" on:click={() => onClick()}>{buttonLabel}</button>
+<Button label={buttonLabel} on:click={() => onClick()} />
 
 <style lang="scss">
   @import 'src/scss/_mixins.scss';
-  @import 'src/scss/_variables.scss';
-
-  .btn {
-    @include button;
-    background: $color-black;
-    color: $color-white;
-  }
 
   .input {
     @include text-input;
