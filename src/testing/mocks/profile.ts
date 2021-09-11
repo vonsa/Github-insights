@@ -1,11 +1,14 @@
-export const mockProfile = {
-  name: 'john',
+import type { Profile } from 'src/types/profiles-types'
+
+export const mockProfile: Profile = {
+  login: 'vonsa',
   info: {
-    login: '',
     createdAt: '11-01-2021',
     avatarUrl: 'http://any.com',
     company: 'vonsa',
     websiteUrl: 'https://vonsa.nl',
+    name: null,
+    url: 'https://github.com/vonsa',
   },
   stats: {
     stars: 0,

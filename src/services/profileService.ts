@@ -20,7 +20,7 @@ async function getProfileValues<T extends ProfileKey[]>(
   userName: string,
   keys: T,
   options?: getUserValuesOptions,
-): Promise<ProfileFromKeys<T> | undefined> {
+): Promise<({ login: string } & ProfileFromKeys<T>) | undefined> {
   const storedUser = get(profiles$)[userName]
   let fetchKeys: (keyof Profile)[] | undefined
 

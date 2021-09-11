@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch'
 import {
   ApolloClient,
   ApolloLink,
@@ -11,7 +12,7 @@ import {
 import { onError } from '@apollo/client/link/error'
 import { logout, promptLogin$, token$ } from 'src/services/authService'
 
-const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql' })
+const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql', fetch })
 
 const authLink = new ApolloLink((operation, forward) => {
   const token = token$.getValue()
