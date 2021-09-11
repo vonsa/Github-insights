@@ -86,6 +86,7 @@ const interactibleHovered$ = interactables$.pipe(
           takeUntil(fromEvent(interactable, 'mouseleave')),
           endWith({ interactable, hovered: false }),
           repeat(),
+          startWith({ interactable, hovered: false }),
         )
       }),
     )
@@ -163,6 +164,20 @@ combineLatest([interactibleHovered$, interacters$])
         }),
       )
     }
+  })
+
+const removedInteractable$ = interactable$.pipe(filter(({ action }) => action === 'REMOVE'))
+
+removedInteractable$
+  .pipe(withLatestFrom(interacters$, mousePosition$))
+  .subscribe(([interactable, interacters, { x, y }]) => {
+    interacters.forEach((interacter) => {
+      interacter.dispatchEvent(
+        new CustomEvent('leave', {
+          detail: { interacter, interactable, x, y },
+        }),
+      )
+    })
   })
 
 combineLatest([interacters$, interactibleHoveredDetails$])
