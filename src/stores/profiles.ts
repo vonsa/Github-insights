@@ -45,4 +45,8 @@ function updateProfile(user: Profile) {
   })
 }
 
-export { profiles$, addProfile, removeProfile, updateProfile }
+function clearProfiles() {
+  profileStore.set({})
+}
+
+export { profiles$, addProfile, removeProfile, updateProfile, clearProfiles }

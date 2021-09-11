@@ -141,6 +141,7 @@
 
     & .add-profile {
       margin-right: $margin-small;
+      display: flex;
     }
 
     & .profile-select {
