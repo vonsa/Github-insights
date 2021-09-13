@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { query } from 'src/GraphQL/apollo'
+  import { query } from 'src/services/apolloService'
   import { watchParam } from 'src/stores/searchParams'
   import Spinner from '../UI/Spinner.svelte'
   import { queries } from 'src/GraphQL/Queries/index'

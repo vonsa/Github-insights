@@ -4,7 +4,7 @@ import type { UserStats } from 'src/GraphQL/types/UserStats'
 import type { ProfileKey } from 'src/types/profiles-types'
 import type { User_user } from 'src/GraphQL/types/User'
 import { QUERY_USER } from 'src/GraphQL/Queries/User/user-queries'
-import { query } from 'src/GraphQL/apollo'
+import { query } from 'src/services/apolloService'
 
 export type UserQueryVariables = { [K in ProfileKey]?: true }
 
