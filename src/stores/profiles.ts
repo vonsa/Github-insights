@@ -13,6 +13,9 @@ const { update, subscribe } = profileStore
 const profiles$ = { subscribe }
 
 function addProfile(user: Profile) {
+  if (!user.login) {
+    throw new Error('Invalid profile passed to addProfile')
+  }
   update((profiles) => {
     if (profiles[user.login]) {
       log('Could not add profile to store because it already exists')
@@ -26,6 +29,9 @@ function addProfile(user: Profile) {
 }
 
 function removeProfile(user: Profile) {
+  if (!user.login) {
+    throw new Error('Invalid profile passed to removeProfile')
+  }
   update((profiles) => {
     if (!profiles[user.login]) {
       log('Could not remove profile from store because it could not be found')
@@ -38,6 +44,10 @@ function removeProfile(user: Profile) {
 }
 
 function updateProfile(user: Profile) {
+  if (!user.login) {
+    throw new Error('Invalid profile passed to updateProfile')
+  }
+
   update((profiles) => {
     return produce(profiles, (draft) => {
       draft[user.login] = user
