@@ -1,7 +1,7 @@
 import { get } from 'svelte/store'
 import type { Profile } from '../types/profiles-types'
 import { profiles$, addProfile, updateProfile, removeProfile, clearProfiles } from './profiles'
-import { mockProfile } from '../testing/mocks/profile'
+import { mockProfile } from '../services/mocks/profileMock'
 
 afterEach(() => {
   clearProfiles()

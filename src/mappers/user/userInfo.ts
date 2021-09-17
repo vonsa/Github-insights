@@ -9,6 +9,10 @@ export function userInfoMapper({
   websiteUrl,
   url,
 }: Partial<User_user>): Profile['info'] | undefined {
+  if (!createdAt) {
+    return undefined
+  }
+
   return {
     name: name || null,
     avatarUrl,
