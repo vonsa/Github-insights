@@ -22,7 +22,6 @@
   />
 </svelte:head>
 
-<!-- <MouseFollower /> -->
 <AutoRedirect>
   <Apollo>
     <Navbar items={$navItems$} logo="/assets/images/logo.svg" />

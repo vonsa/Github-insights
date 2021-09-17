@@ -5,8 +5,6 @@ import { login, logout, token$ } from 'src/services/authService'
 import { log } from 'src/debugging/logger'
 import type { NavbarItem } from 'src/Components/UI/types/Navbar'
 import Home from '../Routes/Home.svelte'
-import Login from '../Components/Login.svelte'
-import Logout from '../Routes/Logout.svelte'
 import Profile from '../Routes/Profile.svelte'
 import NotFound from '../Routes/NotFound.svelte'
 import NotAllowed from '../Routes/NotAllowed.svelte'
@@ -17,8 +15,6 @@ const routes = {
     component: Profile,
     conditions: [() => !!token$],
   }),
-  '/login': Login,
-  '/logout': Logout,
   '/not-allowed': NotAllowed,
   '*': NotFound,
 }

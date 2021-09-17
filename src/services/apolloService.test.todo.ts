@@ -1,7 +1,7 @@
 /*
     @TODO:
 
-    CASE 1: Test authorization header added to all queries
+    CASE 1: Test if authorization header is added to all queries
 
     1. set token$
     2. Execute an Apollo query

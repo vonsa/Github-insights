@@ -3,7 +3,7 @@
   import RankedItems from '../Components/RankedItems.svelte'
   import type { RankedItemsProp } from '../Components/RankedItems.svelte'
   import GridRow from '../Components/Layout/GridRow.svelte'
-  import Selector from '../Components/UI/Selector.svelte'
+  import Select from '../Components/UI/Select.svelte'
   import Row from '../Components/Layout/Row.svelte'
   import List from '../Components/List.svelte'
   import type { Profile } from 'src/types/profiles-types'
@@ -88,7 +88,7 @@
         </div>
         <div class="profile-select input">
           <h4 class="select-label">Switch profile:</h4>
-          <Selector items={storedProfiles} selected={activeProfile} on:change={onSwitchProfile} />
+          <Select items={storedProfiles} selected={activeProfile} on:change={onSwitchProfile} />
         </div>
       </div>
     </div>
