@@ -1,6 +1,6 @@
 <script lang="ts">
   import List from './List.svelte'
-  import Spinner from './UI/Spinner.svelte'
+  import Spinner from '../UI/Spinner.svelte'
   import { getProfileValues } from 'src/services/profileService'
 
   export let userName: string

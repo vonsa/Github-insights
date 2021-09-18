@@ -7,7 +7,7 @@
 <script lang="ts">
   import { showTooltip } from 'src/libs/tooltip/tooltip'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
-  import Suggestions from './Suggestions.svelte'
+  import DynamicList from '../Hoc/DynamicList.svelte'
 
   export let suggestions: readonly string[]
 
@@ -52,11 +52,11 @@
     </div>
   </slot>
 {/each}
-<Suggestions suggestions={mappedSuggestions}>
-  <svelte:fragment let:suggestion>
-    <button class="suggestion" on:click={() => addToSelection(suggestion)}>{suggestion}</button>
+<DynamicList list={mappedSuggestions}>
+  <svelte:fragment let:item>
+    <button class="suggestion" on:click={() => addToSelection(item)}>{item}</button>
   </svelte:fragment>
-</Suggestions>
+</DynamicList>
 
 <style lang="scss">
   .suggestion {

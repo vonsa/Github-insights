@@ -1,7 +1,7 @@
 <script lang="ts">
   import { login, token$ } from 'src/services/authService'
   import Route from '../Components/Hoc/Route.svelte'
-  import Button from '../Components/ProjectSpecific/Button.svelte'
+  import Button from '../Components/UI/Button.svelte'
   import { getBaseUrl } from 'src/util/url'
   import { push } from 'src/services/navigationService'
 </script>

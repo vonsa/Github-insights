@@ -4,7 +4,7 @@
   import AutoRedirect from './Components/Hoc/AutoRedirect.svelte'
   import 'src/services/authService'
   import Modal from './Components/UI/Modal.svelte'
-  import AuthenticateButton from './Components/ProjectSpecific/AuthenticateButton.svelte'
+  import AuthenticateButton from './Components/Smart/AuthenticateButton.svelte'
   import { promptLogin$ } from 'src/services/authService'
   import Notifications from './Components/UI/Notifications.svelte'
   import Navbar from './Components/UI/Navbar.svelte'

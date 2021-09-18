@@ -2,7 +2,7 @@
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import { fade } from 'svelte/transition'
 
-  import Image from '../Image.svelte'
+  import Image from '../Decoration/Image.svelte'
   import Nav from './Nav.svelte'
   import type { NavbarItem } from './types/Navbar'
 

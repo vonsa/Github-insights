@@ -8,10 +8,10 @@
 </script>
 
 <script lang="ts">
-  import MaskedIcon from './Decoration/MaskedIcon.svelte'
   import type { Icon } from 'src/assets/icons'
   import { icons } from 'src/assets/icons'
-  import Image from './Image.svelte'
+  import MaskedIcon from '../Decoration/MaskedIcon.svelte'
+  import Image from '../Decoration/Image.svelte'
 
   export let icon: Icon
   export let label: string
@@ -36,8 +36,8 @@
 </a>
 
 <style lang="scss">
-  @import '../scss/_mixins.scss';
-  @import '../scss/_variables.scss';
+  @import '../../scss/_mixins.scss';
+  @import '../../scss/_variables.scss';
 
   .container {
     width: 26rem;

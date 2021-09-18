@@ -1,18 +1,20 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte'
   import MaskedIcon from './Decoration/MaskedIcon.svelte'
-  import { showTooltip } from 'src/libs/tooltip/tooltip'
 
   export let text: string
+
+  const dispatch = createEventDispatcher()
 
   function copy() {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        showTooltip({ title: 'Copied successfully!' })
+        dispatch('success')
       })
       .catch((err) => {
         console.error('Something went wrong', err)
-        showTooltip({ title: 'Could not copy automatically, please try it manually.' })
+        dispatch('failed')
       })
   }
 </script>
@@ -24,8 +26,7 @@
       event.currentTarget.select()
       copy()
     }}
-    class="text-container"
-    title="Testing">{text}</textarea
+    class="text-container">{text}</textarea
   >
   <button on:click={copy} class="copy-btn">
     <MaskedIcon icon="clipboard" size="small" />
