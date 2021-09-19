@@ -10,6 +10,9 @@ $color-white: var(--color-white);
 $color-offwhite: var(--color-offwhite);
 $color-success: var(--color-success);
 $color-error: var(--color-error);
+$color-blue: var(--color-blue);
+$color-lightblue: var(--color-lightblue);
+$color-orange: var(--color-orange);
 
 // Margins
 $margin-tiny: 1rem;
@@ -37,6 +40,7 @@ $media-medium: 1200px;
 
 // Icons
 $icon-color: #000;
+$icon-size-tiny: 1.4rem;
 $icon-size-small: 2rem;
 $icon-size-medium: 4rem;
 $icon-size-large: 8rem;

@@ -24,7 +24,9 @@
 
 <AutoRedirect>
   <Apollo>
-    <Navbar items={$navItems$} logo="/assets/images/logo.svg" />
+    <Navbar items={$navItems$} logo="/assets/images/logo.svg">
+      <h2 slot="logo" class="logo">GITHUB FINDER</h2>
+    </Navbar>
     <Router {routes} restoreScrollState={true} on:conditionsFailed={conditionsFailed} />
   </Apollo>
 </AutoRedirect>
@@ -40,3 +42,10 @@
 {/if}
 
 <Notifications />
+
+<style lang="scss">
+  @import 'src/scss/_variables.scss';
+  .logo {
+    color: $color-white;
+  }
+</style>

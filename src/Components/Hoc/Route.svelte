@@ -10,6 +10,7 @@
 
 <style lang="scss">
   @import 'src/scss/_variables.scss';
+  @import 'src/scss/_mixins.scss';
   .route {
     position: relative;
     min-height: calc(100vh - #{$navbar-height});
@@ -21,8 +22,12 @@
     min-height: 100%;
     top: 0;
     left: 0;
-    padding: $padding-medium;
     display: flex;
     flex-direction: column;
+    padding: $padding-small;
+
+    @include media-small {
+      padding: $padding-medium;
+    }
   }
 </style>

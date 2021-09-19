@@ -23,4 +23,8 @@
     @include input;
     outline: none;
   }
+
+  select {
+    width: 100%;
+  }
 </style>

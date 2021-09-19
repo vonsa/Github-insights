@@ -5,7 +5,7 @@
   import type { Styles } from '../../util/styles'
 
   export let icon: Icon
-  export let size: 'small' | 'medium' | 'large' = 'medium'
+  export let size: 'tiny' | 'small' | 'medium' | 'large' = 'medium'
   export let color: string = '#000'
   export let styles: Styles | undefined = undefined
 
@@ -14,13 +14,23 @@
     mask-image: url(${icons[icon]});
     `
 
-  let { width, height, ...remainingStyles } = styles || {}
+  let width: Styles[keyof Styles]
+  let height: Styles[keyof Styles]
+  let remainingStyles: Styles
+
+  $: ({ width, height, ...remainingStyles } = styles || {})
+  $: outerStylable = {
+    ...(width ? { width } : {}),
+    ...(height ? { height } : {}),
+    transition: remainingStyles.transition,
+  }
+  $: innerStylable = { 'background-color': color, ...remainingStyles }
 </script>
 
-<Stylable styles={{ width, height, transition: remainingStyles.transition }} on:click>
+<Stylable styles={outerStylable} on:click>
   <div alt="icon" style={`${maskImageSrc}`} class={`mask ${size}`}>
     <div class="icon">
-      <Stylable styles={{ 'background-color': color, ...remainingStyles }} />
+      <Stylable styles={innerStylable} />
     </div>
   </div>
 </Stylable>
@@ -39,6 +49,11 @@
     min-width: 100%;
     min-height: 100%;
 
+    &.tiny {
+      width: $icon-size-tiny;
+      height: $icon-size-tiny;
+    }
+
     &.small {
       width: $icon-size-small;
       height: $icon-size-small;
@@ -54,7 +69,6 @@
   }
 
   .icon {
-    background-color: $icon-color;
     width: 100%;
     height: 100%;
   }

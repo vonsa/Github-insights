@@ -17,6 +17,14 @@ const iconsConfig = {
   error: 'error.svg',
   info: 'info.svg',
   success: 'success.svg',
+  link: 'link.svg',
+  open: 'open.svg',
+  'external-link': 'external-link.svg',
+  menu: 'menu.svg',
+  home: 'home.svg',
+  profiles: 'profiles.svg',
+  login: 'login.svg',
+  logout: 'logout.svg',
 }
 
 export type Icon = keyof typeof iconsConfig

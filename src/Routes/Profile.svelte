@@ -16,6 +16,7 @@
   import Route from '../Components/Hoc/Route.svelte'
   import { replace } from 'svelte-spa-router'
   import Input from '../Components/UI/Input.svelte'
+  import IconButton from '../Components/UI/IconButton.svelte'
 
   let activeProfile: string
   let userData: Omit<Required<Profile>, 'interests' | 'previousSearchResults'>
@@ -96,22 +97,29 @@
       <Spinner />
     {:else if userData}
       <Row>
-        <GridRow>
-          <div class="avatar" slot="left">
-            <a href={userData.info.url}>
-              <Image src={userData.info.avatarUrl} alt="avatar" />
-            </a>
-          </div>
-          <div slot="right">
-            <h2 class="name">{userData.login}</h2>
-            <List items={userData.stats} />
-          </div>
-        </GridRow>
+        <div class="user-info-row">
+          <GridRow>
+            <div class="avatar" slot="left">
+              <a href={userData.info.url}>
+                <Image src={userData.info.avatarUrl} alt="avatar" />
+              </a>
+            </div>
+            <div slot="right" class="right">
+              <div class="name-container">
+                <h2 class="name">{userData.login}</h2>
+                <a href={userData.info.url}>
+                  <IconButton icon="external-link" />
+                </a>
+              </div>
+              <List items={userData.stats} />
+            </div>
+          </GridRow>
+        </div>
       </Row>
 
       {#if rankedItems}
         <div class="repositories">
-          <h2 class="repositories-title">Top repositories</h2>
+          <h2 class="repositories-title">Top contributed repositories</h2>
           <div class="ranked-items">
             <RankedItems items={rankedItems} />
           </div>
@@ -130,18 +138,35 @@
   @import 'src/scss/_variables.scss';
   @import 'src/scss/_mixins.scss';
 
-  .manage-profiles {
+  .container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include media-small {
+      display: block;
+    }
+  }
+
+  .manage-profiles {
+    display: grid;
     align-items: center;
     margin-bottom: $margin-small;
-    justify-content: space-between;
     max-width: 58rem;
-    flex-wrap: wrap;
     gap: $margin-small;
 
-    & .add-profile {
-      margin-right: $margin-small;
+    @include media-small {
       display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    & .add-profile {
+      display: flex;
+
+      @include media-small {
+        margin-right: $margin-small;
+      }
     }
 
     & .profile-select {
@@ -149,8 +174,40 @@
       align-items: center;
 
       & .select-label {
+        width: 100%;
         margin-right: $margin-small;
+
+        @include media-small {
+          width: auto;
+        }
       }
+    }
+  }
+
+  .user-info-row {
+    padding: $padding-medium;
+    border-radius: $border-radius-medium;
+    border: 1px solid $color-grey;
+
+    @include media-small {
+      border: none;
+      padding: 0;
+      border-radius: 0;
+    }
+  }
+
+  .name-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $margin-small;
+
+    @include media-small {
+      justify-content: flex-start;
+    }
+
+    & .name {
+      margin-right: $margin-small;
     }
   }
 
@@ -165,6 +222,11 @@
   }
 
   .repositories {
+    text-align: center;
+
+    @include media-small {
+      text-align: left;
+    }
     & .repositories-title {
       margin-bottom: $margin-small;
     }
@@ -175,10 +237,6 @@
         margin-right: $margin-medium;
       }
     }
-  }
-
-  .name {
-    margin-bottom: $margin-small;
   }
 
   .loading-overlay {

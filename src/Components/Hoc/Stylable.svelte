@@ -10,7 +10,7 @@
     style = generateStyleString(styles, state)
   }
 
-  applyStyles('default')
+  $: if (styles) applyStyles('default')
 </script>
 
 <div
@@ -27,6 +27,7 @@
 
 <style lang="scss">
   .stylable {
+    display: flex;
     width: 100%;
     height: 100%;
   }

@@ -26,7 +26,7 @@
     }
   }}
 />
-<Button label={buttonLabel} on:click={() => onClick()} />
+<Button label={buttonLabel} on:click={onClick} />
 
 <style lang="scss">
   @import 'src/scss/_mixins.scss';

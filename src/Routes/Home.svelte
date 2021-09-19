@@ -7,6 +7,7 @@
 </script>
 
 <Route>
+  <div class="background" />
   <div class="container">
     <div class="intro">
       <h1>Check your Github stats!</h1>
@@ -20,10 +21,16 @@
         icon="github"
         label="Authenticate using Github"
         on:click={() => login(getBaseUrl())}
+        type="light"
       />
     {:else}
       <div class="buttons">
-        <Button label="View your profile" on:click={() => push('/profiles')} />
+        <Button
+          label="View your profile"
+          icon="profiles"
+          on:click={() => push('/profiles')}
+          type="light"
+        />
       </div>
     {/if}
   </div>
@@ -31,6 +38,22 @@
 
 <style lang="scss">
   @import 'src/scss/_variables.scss';
+
+  .background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-image: linear-gradient(
+        180deg,
+        rgba(32, 11, 51, 0.83) 0%,
+        rgba(40, 16, 66, 0.83) 100%
+      ),
+      url('/assets/images/tech-background.jpg');
+    background-size: cover;
+  }
 
   .container {
     display: flex;
@@ -41,6 +64,7 @@
     width: 100%;
     height: 100%;
     flex: 1;
+    color: $color-white;
   }
 
   .intro {

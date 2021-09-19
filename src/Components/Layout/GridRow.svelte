@@ -16,11 +16,16 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     row-gap: $column-gap-small;
+    justify-items: center;
+
+    @include media-small {
+      justify-items: start;
+    }
 
     @include media-small {
       grid-template-columns: auto 1fr;
       grid-template-rows: 100%;
-      column-gap: $column-gap-small;
+      column-gap: $column-gap-medium;
     }
   }
 </style>

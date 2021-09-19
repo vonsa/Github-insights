@@ -13,6 +13,12 @@
   transform: translate(-50%, -50%);
 }
 
+@mixin media-tiny {
+  @media screen and (min-width: 380px) {
+    @content;
+  }
+}
+
 @mixin media-small {
   @media screen and (min-width: 480px) {
     @content;

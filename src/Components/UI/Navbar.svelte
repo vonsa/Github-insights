@@ -1,13 +1,13 @@
 <script lang="ts">
+  import { link, location as currentLocation } from 'svelte-spa-router'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import { fade } from 'svelte/transition'
-
   import Image from '../Decoration/Image.svelte'
   import Nav from './Nav.svelte'
   import type { NavbarItem } from './types/Navbar'
 
   export let items: NavbarItem[]
-  export let logo: string
+  export let logo: string | undefined = undefined
 
   let mobileMenuToggled = false
 
@@ -18,16 +18,24 @@
 
 <div class="navbar">
   <div class="logo-container">
-    <Image src={logo} alt="logo" />
+    <a href="/" use:link>
+      <slot name="logo">
+        {#if logo}
+          <Image src={logo} alt="logo" />
+        {/if}
+      </slot>
+    </a>
   </div>
   <div class="items items-desktop">
     {#each items as { label, location, action }}
       <div class="item item-desktop">
-        <Nav {label} {location} {action} />
+        <Nav {label} {location} {action} active={$currentLocation === location} />
       </div>
     {/each}
   </div>
-  <button class="mobile-toggle" on:click={toggleMobileMenu}>=</button>
+  <button class="mobile-toggle" on:click={toggleMobileMenu}
+    ><MaskedIcon icon="menu" color="#fff" /></button
+  >
   {#if mobileMenuToggled}
     <div class="mobile-menu" in:fade out:fade>
       <div class="items items-mobile">
@@ -35,14 +43,22 @@
           <div class="item item-mobile">
             {#if mobileIcon}
               <div class="mobile-icon">
-                <MaskedIcon icon={mobileIcon} />
+                <MaskedIcon icon={mobileIcon} color="#fff" size="small" />
               </div>
             {/if}
-            <Nav {label} {location} {action} on:click={toggleMobileMenu} />
+            <Nav
+              {label}
+              {location}
+              {action}
+              on:click={toggleMobileMenu}
+              active={$currentLocation === location}
+            />
           </div>
         {/each}
       </div>
-      <button class="mobile-close" on:click={toggleMobileMenu}>X</button>
+      <button class="mobile-close" on:click={toggleMobileMenu}
+        ><MaskedIcon icon="close" color="#fff" /></button
+      >
     </div>
   {/if}
 </div>
@@ -66,7 +82,6 @@
   }
 
   .logo-container {
-    width: 12rem;
     margin-right: $margin-medium;
   }
 
@@ -118,11 +133,17 @@
     & .items-mobile {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      align-items: center;
 
       & .item-mobile {
+        display: flex;
+        align-items: center;
         &:not(:last-child) {
           margin-bottom: $margin-small;
+        }
+
+        & .mobile-icon {
+          margin-right: $margin-small;
         }
       }
     }

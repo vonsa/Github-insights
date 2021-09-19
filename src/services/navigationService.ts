@@ -23,9 +23,13 @@ const navItems$: Observable<NavbarItem[]> = token$.pipe(map((token) => getNavIte
 
 function getNavItems(loggedIn: boolean) {
   return [
-    { label: 'Home', location: '/' },
-    ...(loggedIn ? [{ label: 'Profiles', location: '/profiles' }] : []),
-    loggedIn ? { label: 'Logout', action: logout } : { label: 'Login', action: login },
+    { label: 'Home', location: '/', mobileIcon: 'home' as const },
+    ...(loggedIn
+      ? [{ label: 'Profiles', location: '/profiles', mobileIcon: 'profiles' as const }]
+      : []),
+    loggedIn
+      ? { label: 'Logout', action: logout, mobileIcon: 'logout' as const }
+      : { label: 'Login', action: login, mobileIcon: 'login' as const },
   ]
 }
 

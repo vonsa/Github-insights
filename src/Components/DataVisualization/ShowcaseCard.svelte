@@ -3,6 +3,7 @@
     icon: Icon
     label: string
     count: number
+    backgroundColor: string
     url?: string
   }
 </script>
@@ -12,20 +13,26 @@
   import { icons } from 'src/assets/icons'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import Image from '../Decoration/Image.svelte'
+  import IconButton from '../UI/IconButton.svelte'
 
   export let icon: Icon
   export let label: string
   export let count: number
   export let url: string | undefined = undefined
+  export let backgroundColor: string
 </script>
 
 <a href={url}>
   <div class="container">
-    <div class="card">
+    <div class="card" style={`background: ${backgroundColor};`}>
+      {#if url}
+        <a href={url} class="link">
+          <IconButton icon="external-link" />
+        </a>
+      {/if}
       <div class="image">
         <Image src={icons[icon]} alt="Rank icon" contain />
       </div>
-      <!-- <MaskedIcon {icon} styles={{ width: { default: '60%' } }} /> -->
       <h4 class="label">{label}</h4>
       <div class="count">
         <h2 class="count-title">{count}</h2>
@@ -40,16 +47,24 @@
   @import '../../scss/_variables.scss';
 
   .container {
-    width: 26rem;
+    // width: 16rem;
+    width: 100%;
     height: 100%;
-    padding: $padding-small;
     @include flex-center;
   }
 
+  .link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: $margin-tiny;
+  }
+
   .card {
-    border-radius: 2rem;
-    background: #eee;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: $border-radius-small;
+    box-shadow: 10px 10px 20px -8px rgba(0, 0, 0, 0.16);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     position: relative;
     @include flex-center;
     flex-direction: column;
@@ -57,7 +72,12 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    // @include hover-slide;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 20px 20px 30px -8px rgba(0, 0, 0, 0.12);
+    }
 
     & .image {
       width: 9rem;
