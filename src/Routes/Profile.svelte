@@ -9,7 +9,6 @@
   import type { Profile } from 'src/types/profiles-types'
   import { log } from 'src/debugging/logger'
   import { getProfileValues } from 'src/services/profileService'
-  import Spinner from '../Components/UI/Spinner.svelte'
   import { notify } from 'src/services/notificationService'
   import { profiles$ } from 'src/stores/profiles'
   import { login$, token$ } from 'src/services/authService'
@@ -17,6 +16,8 @@
   import { replace } from 'svelte-spa-router'
   import Input from '../Components/UI/Input.svelte'
   import IconButton from '../Components/UI/IconButton.svelte'
+  import LoadingOverlay from '../Components/Decoration/LoadingOverlay.svelte'
+  import CenteredSpinner from '../Components/UI/CenteredSpinner.svelte'
 
   let activeProfile: string
   let userData: Omit<Required<Profile>, 'interests' | 'previousSearchResults'>
@@ -94,7 +95,7 @@
       </div>
     </div>
     {#if loading && !userData}
-      <Spinner />
+      <CenteredSpinner />
     {:else if userData}
       <Row>
         <div class="user-info-row">
@@ -127,8 +128,8 @@
       {/if}
 
       {#if loading}
-        <div class="loading-overlay" />
-        <Spinner />
+        <LoadingOverlay />
+        <CenteredSpinner />
       {/if}
     {/if}
   </div>
@@ -237,14 +238,5 @@
         margin-right: $margin-medium;
       }
     }
-  }
-
-  .loading-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.6);
-    top: 0;
-    left: 0;
   }
 </style>

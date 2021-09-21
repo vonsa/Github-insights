@@ -1,9 +1,9 @@
 <script lang="ts">
   import { query } from 'src/services/apolloService'
   import { watchParam } from 'src/stores/searchParams'
-  import Spinner from '../UI/Spinner.svelte'
   import { queries } from 'src/GraphQL/Queries/index'
   import { combineLatest } from 'rxjs'
+  import CenteredSpinner from '../UI/CenteredSpinner.svelte'
 
   const queryParam$ = watchParam('query', true)
   const variables$ = watchParam('variables')
@@ -13,7 +13,7 @@
 
 {#if $params$ && queries[$queryParam$]}
   {#await query({ query: queries[$queryParam$], variables: $variables$ })}
-    <Spinner />
+    <CenteredSpinner />
   {:then data}
     <slot {data} />
   {/await}

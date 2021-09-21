@@ -1,7 +1,7 @@
 <script lang="ts">
   import List from './List.svelte'
-  import Spinner from '../UI/Spinner.svelte'
   import { getProfileValues } from 'src/services/profileService'
+  import CenteredSpinner from '../UI/CenteredSpinner.svelte'
 
   export let userName: string
 
@@ -19,7 +19,7 @@
 </script>
 
 {#await getUserStats(userName)}
-  <Spinner />
+  <CenteredSpinner />
 {:then user}
   {#if user}
     <h2 class="name">{userName}</h2>

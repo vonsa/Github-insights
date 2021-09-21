@@ -9,6 +9,7 @@
   import Notifications from './Components/UI/Notifications.svelte'
   import Navbar from './Components/UI/Navbar.svelte'
   import { conditionsFailed, navItems$, routes } from './services/navigationService'
+  import Authentication from './Components/Hoc/Authentication.svelte'
 </script>
 
 <svelte:head>
@@ -41,6 +42,7 @@
   </Modal>
 {/if}
 
+<Authentication />
 <Notifications />
 
 <style lang="scss">
