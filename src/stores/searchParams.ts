@@ -2,6 +2,7 @@ import qs from 'qs'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { filter, map, shareReplay } from 'rxjs/operators'
 import { querystring } from 'svelte-spa-router'
+import { getUrlWithoutParam } from 'src/util/url'
 
 export const querystring$ = new BehaviorSubject<string | undefined>(window.location.search)
 
@@ -12,10 +13,19 @@ const params$ = querystring$.pipe(
   shareReplay(1),
 )
 
-function watchParam(param: string, filterNullish = false): Observable<any> {
+function watchParam(
+  param: string,
+  filterNullish = false,
+): { param$: Observable<any>; remove: () => void } {
   const param$ = params$.pipe(map((params) => (params && params[param]) || null))
 
-  return filterNullish ? param$.pipe(filter((param) => !!param)) : param$
+  const filteredParam$ = filterNullish ? param$.pipe(filter((param) => !!param)) : param$
+
+  return { param$: filteredParam$, remove: () => removeParamFromUrl(param) }
+}
+
+function removeParamFromUrl(param: string) {
+  window.location.href = getUrlWithoutParam(param)
 }
 
 function setParam(param: string, value: any) {

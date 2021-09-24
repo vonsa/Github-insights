@@ -5,8 +5,8 @@
   import { combineLatest } from 'rxjs'
   import CenteredSpinner from '../UI/CenteredSpinner.svelte'
 
-  const queryParam$ = watchParam('query', true)
-  const variables$ = watchParam('variables')
+  const { param$: queryParam$ } = watchParam('query', true)
+  const { param$: variables$ } = watchParam('variables')
 
   const params$ = combineLatest([queryParam$, variables$])
 </script>

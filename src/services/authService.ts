@@ -1,6 +1,6 @@
 import qs from 'qs'
 import axios from 'axios'
-import { BehaviorSubject, combineLatest, Observable, Subject, timer } from 'rxjs'
+import { BehaviorSubject, combineLatest, of, Subject, timer } from 'rxjs'
 import {
   filter,
   repeatWhen,
@@ -29,19 +29,22 @@ import { notify } from './notificationService'
   */
 
 const tryLogin$ = new Subject<string>()
-const code$: Observable<string | null> = watchParam('code')
+const { param$: code$, remove: removeCodeParam } = watchParam('code')
 const token$ = new BehaviorSubject(localStorage.getItem('auth_token'))
 const promptLogin$ = new Subject<boolean>()
 const login$ = new BehaviorSubject<string | null>(localStorage.getItem('login'))
 
 const waiting$ = code$.pipe(
-  filterNullish(),
-  switchMap(() => {
-    return combineLatest([token$.pipe(filter((token) => !!token)), timer(1200)]).pipe(
-      mapTo(false),
-      startWith(true),
-      take(2),
-    )
+  switchMap((code) => {
+    if (code) {
+      return combineLatest([token$.pipe(filter((token) => !!token)), timer(1200)]).pipe(
+        mapTo(false),
+        startWith(true),
+        take(2),
+      )
+    }
+
+    return of(false)
   }),
 )
 
@@ -94,7 +97,7 @@ function logout() {
 
 function getTokenAndLoginDetails(code: string) {
   axios
-    .get(`https://the-github-gatekeeper.herokuapp.com/authenticate/${code}`)
+    .get(`${process.env.GATEKEEPER_URL}${code}`)
     .then((response) => {
       if (response.data.error) {
         throw new Error('Could not authenticate')
@@ -108,6 +111,7 @@ function getTokenAndLoginDetails(code: string) {
     .catch(() => {
       notify({ title: 'Could not authenticate with Github, please try again.', type: 'ERROR' })
       token$.next(null)
+      removeCodeParam()
     })
 }
 

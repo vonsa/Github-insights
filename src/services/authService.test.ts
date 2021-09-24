@@ -30,7 +30,7 @@ describe('authService', () => {
 
     setSearchParams('code=test')
 
-    const code$ = watchParam('code')
+    const { param$: code$ } = watchParam('code')
     code$.pipe(take(1)).subscribe((code) => {
       expect(code).toBe('test')
       done()
