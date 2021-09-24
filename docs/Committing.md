@@ -2,7 +2,7 @@
 
 When committing to the project, a set of automated pre-commit checks are executed to validate the commit.
 
-## Checks
+### Checks
 
 - ESLint
 - svelte-check
@@ -10,7 +10,7 @@ When committing to the project, a set of automated pre-commit checks are execute
 - TypeScript
 - Jest
 
-## Beneficial extensions
+### Beneficial extensions
 
 - ESLint (dbaeumer.vscode-eslint)
 - prettier (esbenp.prettier-vscode)
