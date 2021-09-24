@@ -5,7 +5,7 @@
   import type { Styles } from '../../util/styles'
 
   export let icon: Icon
-  export let size: 'tiny' | 'small' | 'medium' | 'large' = 'medium'
+  export let size: 'tiny' | 'small' | 'medium' | 'large' | 'relative' = 'medium'
   export let color: string = '#000'
   export let styles: Styles | undefined = undefined
 
@@ -65,6 +65,11 @@
     &.large {
       width: $icon-size-large;
       height: $icon-size-large;
+    }
+
+    &.relative {
+      width: 100%;
+      height: 100%;
     }
   }
 

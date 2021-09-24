@@ -30,7 +30,7 @@
   on:blur={disableHoveredState}
 >
   <div class="icon">
-    <MaskedIcon {icon} size="tiny" {styles} />
+    <MaskedIcon {icon} size="relative" {styles} />
   </div></button
 >
 
@@ -44,9 +44,13 @@
     align-items: center;
     color: $color-white;
     transition: background-color 0.2s ease;
-    padding: 0.8rem;
+    padding: 1.5rem;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.2);
+
+    @include media-small {
+      padding: 0.8rem;
+    }
 
     &:hover {
       background: $color-black;
@@ -58,5 +62,12 @@
     justify-content: center;
     align-items: center;
     pointer-events: none;
+    width: 2rem;
+    height: 2rem;
+
+    @include media-small {
+      width: $icon-size-tiny;
+      height: $icon-size-tiny;
+    }
   }
 </style>

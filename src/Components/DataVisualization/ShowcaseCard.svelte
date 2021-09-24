@@ -22,25 +22,23 @@
   export let backgroundColor: string
 </script>
 
-<a href={url}>
-  <div class="container">
-    <div class="card" style={`background: ${backgroundColor};`}>
-      {#if url}
-        <a href={url} class="link">
-          <IconButton icon="external-link" />
-        </a>
-      {/if}
-      <div class="image">
-        <Image src={icons[icon]} alt="Rank icon" contain />
-      </div>
-      <h4 class="label">{label}</h4>
-      <div class="count">
-        <h2 class="count-title">{count}</h2>
-        <MaskedIcon icon="star" styles={{ width: '2.4rem', height: '2.4rem' }} color="crimson" />
-      </div>
+<div class="container">
+  <div class="card" style={`background: ${backgroundColor};`}>
+    {#if url}
+      <a href={url} class="link">
+        <IconButton icon="external-link" />
+      </a>
+    {/if}
+    <div class="image">
+      <Image src={icons[icon]} alt="Rank icon" contain />
+    </div>
+    <h4 class="label">{label}</h4>
+    <div class="count">
+      <h2 class="count-title">{count}</h2>
+      <MaskedIcon icon="star" styles={{ width: '2.4rem', height: '2.4rem' }} color="crimson" />
     </div>
   </div>
-</a>
+</div>
 
 <style lang="scss">
   @import '../../scss/_mixins.scss';

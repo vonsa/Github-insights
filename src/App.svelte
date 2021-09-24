@@ -26,7 +26,7 @@
 <AutoRedirect>
   <Apollo>
     <Navbar items={$navItems$} logo="/assets/images/logo.svg">
-      <h2 slot="logo" class="logo">GITHUB FINDER</h2>
+      <h2 slot="logo" class="logo">GITHUB INSIGHTS</h2>
     </Navbar>
     <Router {routes} restoreScrollState={true} on:conditionsFailed={conditionsFailed} />
   </Apollo>
