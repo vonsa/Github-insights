@@ -1,3 +1,14 @@
+# Working with Github
+
+To be able to authenticate with Github, an OAuth app has to be created at `https://github.com/settings/developers`.
+
+## Setup
+
+1. Replace this project's Client ID environment variable with your app specific Client ID.
+2. Set up Gatekeeper (see docs/Hosting.md) with your Client Secret and Client ID values.
+
+# GraphQL API
+
 ## Introduction
 
 https://docs.github.com/en/graphql/overview/about-the-graphql-api
