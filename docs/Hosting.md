@@ -13,4 +13,4 @@ https://the-github-gatekeeper.herokuapp.com
 ### Frontend
 
 The frontend is hosted at:
-github-insights.coendewaal.com (Neostrada hosting provider)
+https://github-insights.coendewaal.com (Neostrada hosting provider)
