@@ -2,6 +2,8 @@
 
 Get more insights in your Github statistics.
 
+Hosted at: https://github-insights.coendewaal.com
+
 ## Docs
 
 - [Architecture](docs/Architecture/)
