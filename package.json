@@ -15,7 +15,8 @@
     "test:jest": "jest",
     "test:jest:watch": "npm test -- --watch",
     "test:typescript": "sh -c 'tsc -p tsconfig.json --noEmit'",
-    "test:prettier": "prettier --check --loglevel=warn src/**/*",
+    "test:prettier": "prettier --check --loglevel=warn",
+    "test:prettier:src": "npm run test:prettier -- src/**/*",
     "graphql:types": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat",
     "graphql:types:dev": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat --watch"
   },
@@ -81,7 +82,7 @@
     "svelte-preprocess": "^4.8.0",
     "ts-jest": "^26.5.6",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.7.3"
   },
   "dependencies": {
     "@apollo/client": "^3.4.9",
