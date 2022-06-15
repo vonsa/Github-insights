@@ -30,3 +30,8 @@ steps:
     npm run test:all
     npm run build
   displayName: 'Run tests and build for release'
+
+- task: PublishBuildArtifacts@1
+  inputs: 
+    PathtoPublish: $(Build.ArtifactStagingDirectory)
+    ArtifactName: 'releaseBuild'
