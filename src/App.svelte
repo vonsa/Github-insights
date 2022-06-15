@@ -37,7 +37,7 @@
       promptLogin$.next(false)
     }}
   >
-    <h3>You seem to be logged out, please authorize yourself using Github</h3>
+    <h3>You seem to be logged out, please authorize yourself using Github.</h3>
     <AuthenticateButton />
   </Modal>
 {/if}
