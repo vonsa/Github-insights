@@ -12,13 +12,21 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '14.2.0'
   displayName: 'Install Node.js'
+
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: '.env'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: $(Agent.TempDirectory)
+    Contents: '**\.env'
+    TargetFolder: $(Build.SourcesDirectory)
 
 - script: |
     npm install
-    npm run test
-    npm run svelte-check
-    npm run lint
+    npm run test:all
     npm run build
-  displayName: 'Run tests & build for release'
+  displayName: 'Run tests and build for release'
