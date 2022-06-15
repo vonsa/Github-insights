@@ -4,5 +4,6 @@
 .env
 .env.local
 .env.production
+package-lock.json
 
 .DS_Store
