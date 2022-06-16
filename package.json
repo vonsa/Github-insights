@@ -8,7 +8,7 @@
     "start": "sirv public --no-clear",
     "prepare": "husky install",
     "test:all": "npm run test:jest & npm run test:typescript & npm run test:prettier & npm run test:eslint:src & npm run test:svelte",
-    "test:svelte": "svelte-check --fail-on-warnings --fail-on-hints --tsconfig ./tsconfig.json",
+    "test:svelte": "svelte-check --fail-on-warnings --tsconfig ./tsconfig.json",
     "test:eslint": "eslint --max-warnings 0 --ext ts,tsx,js --no-ignore",
     "test:eslint:src": "npm run test:eslint -- ./src",
     "test:eslint:fix": "npm run lint -- --fix",
