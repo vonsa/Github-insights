@@ -26,7 +26,7 @@
     {:else}
       <div class="buttons">
         <Button
-          label="View your profile"
+          label="View profile"
           icon="profiles"
           on:click={() => push('/profiles')}
           type="light"
