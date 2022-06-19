@@ -30,3 +30,9 @@ steps:
     npm run test:all
     npm run build
   displayName: 'Verify build & run tests'
+
+- bash: |
+    git push --prune git@github.com:vonsa/Github-insights.git \
+        +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+  displayName: 'Copy to Github'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
