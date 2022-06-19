@@ -9,6 +9,7 @@ Hosted at: https://github-insights.coendewaal.com
 - [Architecture](docs/Architecture/)
 - [Github specific setup](docs/Github.md)
 - [Committing](docs/Committing.md)
+- [CI/CD](docs/CI-CD.md)
 - [GraphQL setup](docs/GraphQL.md)
 - [Hosting information](docs/Hosting.md)
 - [Data collection inspiration](docs/Data-collection-inspiration/)
