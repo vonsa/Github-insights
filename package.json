@@ -19,7 +19,8 @@
     "test:prettier:src": "npm run test:prettier -- src/**/*",
     "graphql:types": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat",
     "graphql:types:dev": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat --watch",
-    "sentry:upload:sourcemaps": "sentry-cli releases files github-insights@$VERSION upload-sourcemaps ./public/build --url-prefix '~/build'"
+    "sentry:upload:sourcemaps": "sentry-cli releases files github-insights@$VERSION upload-sourcemaps ./public/build --url-prefix '~/build'",
+    "sentry:release:finalize": "sentry-cli releases finalize github-insights@$VERSION"
   },
   "lint-staged": {
     "*.ts?(x)": [
