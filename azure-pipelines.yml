@@ -1,4 +1,3 @@
-# Node.js
 # Build a general Node.js project with npm.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
@@ -30,3 +29,17 @@ steps:
     npm run test:all
     npm run build
   displayName: 'Verify build & run tests'
+
+- task: InstallSSHKey@0
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  inputs:
+    knownHostsEntry: '$(KNOWN_HOSTS)'
+    sshPublicKey: '$(SSH_PUB)'
+    sshKeySecureFile: 'id_rsa_azure_github'
+    
+
+- bash: |
+    git push --prune git@github.com:vonsa/Github-insights.git \
+        +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+  displayName: 'Copy to Github'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
