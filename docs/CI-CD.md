@@ -24,3 +24,10 @@ The new main branch will also automatically push to GitHub.
 1. Merge main to release using a pull request.
 
 A new build will be created on release which will automatically trigger it's deployment to the production environment.
+
+### Versioning
+
+Versions are automatically being generated with the following format:
+<year><month><day>.<buildNumber>
+
+Example: 20220624.3
