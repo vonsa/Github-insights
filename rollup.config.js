@@ -89,8 +89,8 @@ export default {
     commonjs(),
     babel({ babelHelpers: 'bundled' }),
     typescript({
-      sourceMap: !production,
-      inlineSources: !production,
+      sourceMap: true,
+      inlineSources: true,
     }),
     // In dev mode, call `npm run start` once
     // the bundle has been generated
