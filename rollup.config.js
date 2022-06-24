@@ -53,6 +53,7 @@ export default {
       'process.env.NODE_ENV': process.env.NODE_ENV,
       'process.env': JSON.stringify({
         isProd: production,
+        VERSION: process.env.VERSION || 'dev', // VERSION is injected through the package.json build script by Azure DevOps
         ...config().parsed, // attached the .env config
       }),
     }),

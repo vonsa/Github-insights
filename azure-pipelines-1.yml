@@ -3,9 +3,6 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-trigger:
-- release
-
 pool:
   vmImage: ubuntu-latest
 
@@ -29,15 +26,4 @@ steps:
     npm install
     npm run test:all
     npm run build
-    SENTRY_VERSION=$(Build.buildnumber) npm run sentry:upload:sourcemaps
-  displayName: 'Run tests, build for release and upload sourcemaps to Sentry'
-
-- task: CopyFiles@2
-  inputs:
-    Contents: 'public/**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  inputs: 
-    PathtoPublish: $(Build.ArtifactStagingDirectory)
-    ArtifactName: 'releaseBuild'
+  displayName: 'Run tests & build'

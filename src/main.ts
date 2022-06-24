@@ -8,6 +8,8 @@ if (process.env.isProd) {
     dsn: 'https://b44ac9c46e694338b7f288e113d1794d@o1293544.ingest.sentry.io/6516159',
     integrations: [new BrowserTracing()],
     tracesSampleRate: 1.0,
+    environment: 'production',
+    release: `github-insights@${process.env.VERSION}`,
   })
 }
 
