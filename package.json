@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c --environment VERSION:%VERSION%",
+    "build": "rollup -c --environment VERSION:$VERSION",
     "dev": "concurrently \"rollup -c -w\" \"npm run graphql:types:dev\"",
     "start": "sirv public --no-clear",
     "prepare": "husky install",
