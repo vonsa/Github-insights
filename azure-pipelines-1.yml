@@ -29,7 +29,7 @@ steps:
     npm install
     npm run test:all
     npm run build
-    npm run sentry:upload:sourcemaps --SENTRY_VERSION=$(Build.buildnumber)
+    SENTRY_VERSION=$(Build.buildnumber) npm run sentry:upload:sourcemaps
   displayName: 'Run tests, build for release and upload sourcemaps to Sentry'
 
 - task: CopyFiles@2
