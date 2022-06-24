@@ -18,7 +18,8 @@
     "test:prettier": "prettier --check --loglevel=warn",
     "test:prettier:src": "npm run test:prettier -- src/**/*",
     "graphql:types": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat",
-    "graphql:types:dev": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat --watch"
+    "graphql:types:dev": "npx apollo client:codegen src/GraphQL/types/ --localSchemaFile=schemas/github-api-schema.graphql --includes=src/GraphQL/Queries/** --target=typescript --tagName=gql --outputFlat --watch",
+    "sentry:upload:sourcemaps": "sentry-cli releases files 'github-insights@1.0.0' upload-sourcemaps /public/build --url-prefix '~/build'"
   },
   "lint-staged": {
     "*.ts?(x)": [
@@ -41,6 +42,7 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^2.4.2",
     "@rollup/plugin-typescript": "^8.2.5",
+    "@sentry/cli": "^2.2.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/svelte": "^3.0.3",
     "@tsconfig/svelte": "^2.0.0",
@@ -86,6 +88,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.9",
+    "@sentry/browser": "^7.2.0",
+    "@sentry/tracing": "^7.2.0",
     "animejs": "^3.2.1",
     "axios": "^0.21.1",
     "bourbon": "^7.0.0",
