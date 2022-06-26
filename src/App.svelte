@@ -10,6 +10,7 @@
   import Navbar from './Components/UI/Navbar.svelte'
   import { conditionsFailed, navItems$, routes } from './services/navigationService'
   import Authentication from './Components/Hoc/Authentication.svelte'
+  import Analytics from './Components/Smart/Analytics.svelte'
 </script>
 
 <svelte:head>
@@ -23,6 +24,7 @@
   />
 </svelte:head>
 
+<Analytics />
 <AutoRedirect>
   <Apollo>
     <Navbar items={$navItems$} logo="/assets/images/logo.svg">
