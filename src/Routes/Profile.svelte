@@ -18,6 +18,7 @@
   import IconButton from '../Components/UI/IconButton.svelte'
   import LoadingOverlay from '../Components/Decoration/LoadingOverlay.svelte'
   import CenteredSpinner from '../Components/UI/CenteredSpinner.svelte'
+  import { sendAnalyticsEvent } from '../services/analyticsService'
 
   let activeProfile: string
   let userData: Omit<Required<Profile>, 'interests' | 'previousSearchResults'>
@@ -66,11 +67,13 @@
     }
   }
 
-  function addProfile(profile: string) {
+  function onClickSearchProfile(profile: string) {
     if (!profile) {
       notify({ title: 'Profile field may not be empty', type: 'ERROR' })
       return
     }
+
+    sendAnalyticsEvent('Search profile')
 
     loadProfile(profile)
   }
@@ -85,7 +88,7 @@
           <Input
             buttonLabel="Search"
             placeholder="Search for profile name"
-            on:submit={(e) => addProfile(e.detail)}
+            on:submit={(e) => onClickSearchProfile(e.detail)}
           />
         </div>
         <div class="profile-select input">
