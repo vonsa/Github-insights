@@ -24,7 +24,9 @@
   />
 </svelte:head>
 
-<Analytics />
+{#if process.env.isProd}
+  <Analytics />
+{/if}
 <AutoRedirect>
   <Apollo>
     <Navbar items={$navItems$} logo="/assets/images/logo.svg">
