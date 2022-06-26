@@ -13,6 +13,8 @@ Hosted at: https://github-insights.coendewaal.com
 - [GraphQL setup](docs/GraphQL.md)
 - [Hosting information](docs/Hosting.md)
 - [Data collection inspiration](docs/Data-collection-inspiration/)
+- [Monitoring](docs/Monitoring.md)
+- [Analytics](docs/Analytics.md)
 
 ## Roadmap:
 
