@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { icons } from 'src/assets/icons'
-  import type { Icon } from 'src/assets/icons'
+  import { icons } from '@/assets/icons'
+  import type { Icon } from '@/assets/icons'
   import Stylable from '../Hoc/Stylable.svelte'
   import type { Styles } from '../../util/styles'
 

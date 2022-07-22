@@ -1,6 +1,6 @@
 <script lang="ts">
   import qs from 'qs'
-  import { getBaseUrl } from 'src/util/url'
+  import { getBaseUrl } from '@/util/url'
   import { afterUpdate } from 'svelte'
 
   let passed = false

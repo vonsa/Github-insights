@@ -1,4 +1,4 @@
-import type { UserStats } from 'src/GraphQL/types/UserStats'
+import type { UserStats } from '@/GraphQL/types/UserStats'
 
 export const userStatsMock: UserStats = {
   __typename: 'User',

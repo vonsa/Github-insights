@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { analyticsEvents$ } from 'src/services/analyticsService'
-  import { subscribeTo } from 'src/util/observables'
+  import { analyticsEvents$ } from '@/services/analyticsService'
+  import { subscribeTo } from '@/util/observables'
 
   interface PlausibleWindow extends Window {
     plausible: (event: string, options?: { callback?: () => void; props?: any }) => void

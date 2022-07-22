@@ -1,10 +1,10 @@
-import type { Repositories } from 'src/GraphQL/types/Repositories'
-import type { UserInfo } from 'src/GraphQL/types/UserInfo'
-import type { UserStats } from 'src/GraphQL/types/UserStats'
-import type { ProfileKey } from 'src/types/profiles-types'
-import type { User_user } from 'src/GraphQL/types/User'
-import { QUERY_USER } from 'src/GraphQL/Queries/User/user-queries'
-import { query } from 'src/services/apolloService'
+import type { Repositories } from '@/GraphQL/types/Repositories'
+import type { UserInfo } from '@/GraphQL/types/UserInfo'
+import type { UserStats } from '@/GraphQL/types/UserStats'
+import type { ProfileKey } from '@/types/profiles-types'
+import type { User_user } from '@/GraphQL/types/User'
+import { QUERY_USER } from '@/GraphQL/Queries/User/user-queries'
+import { query } from '@/services/apolloService'
 
 export type UserQueryVariables = { [K in ProfileKey]?: true }
 

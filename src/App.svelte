@@ -2,13 +2,13 @@
   import Router from 'svelte-spa-router'
   import Apollo from './Components/Hoc/Apollo.svelte'
   import AutoRedirect from './Components/Hoc/AutoRedirect.svelte'
-  import 'src/services/authService'
+  import '@/services/authService'
+  import { conditionsFailed, navItems$, routes } from '@/services/navigationService'
   import Modal from './Components/UI/Modal.svelte'
   import AuthenticateButton from './Components/Smart/AuthenticateButton.svelte'
-  import { promptLogin$ } from 'src/services/authService'
+  import { promptLogin$ } from './services/authService'
   import Notifications from './Components/UI/Notifications.svelte'
   import Navbar from './Components/UI/Navbar.svelte'
-  import { conditionsFailed, navItems$, routes } from './services/navigationService'
   import Authentication from './Components/Hoc/Authentication.svelte'
   import Analytics from './Components/Smart/Analytics.svelte'
 </script>
@@ -24,7 +24,7 @@
   />
 </svelte:head>
 
-{#if process.env.isProd}
+{#if import.meta.env.PROD}
   <Analytics />
 {/if}
 <AutoRedirect>

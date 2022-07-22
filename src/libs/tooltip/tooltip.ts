@@ -11,8 +11,8 @@ import {
   endWith,
 } from 'rxjs/operators'
 import anime from 'animejs'
-import { filterNullish } from 'src/util/filter'
-import type { NotificationConfig } from 'src/types/notification'
+import { filterNullish } from '@/util/filter'
+import type { NotificationConfig } from '@/types/notification'
 import Tooltip from './TooltipFromAction.svelte'
 
 interface TooltipConfig extends Partial<NotificationConfig> {

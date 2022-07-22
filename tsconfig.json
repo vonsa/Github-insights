@@ -24,7 +24,10 @@
     "types": ["svelte", "node", "jest"],
     "typeRoots": ["node_modules/@types", "src/types/declarations"],
     "lib": ["ES2015", "dom"],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": [

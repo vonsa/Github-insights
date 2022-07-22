@@ -1,7 +1,7 @@
-import produce from 'immer'
-import type { NotificationConfig } from 'src/types/notification'
-import { uid } from 'src/util/uid'
 import { writable } from 'svelte/store'
+import produce from 'immer'
+import type { NotificationConfig } from '@/types/notification'
+import { uid } from '@/util/uid'
 
 const notificationStore = writable<({ id: string } & NotificationConfig)[]>([])
 

@@ -1,4 +1,4 @@
-import type { UserInfo } from 'src/GraphQL/types/UserInfo'
+import type { UserInfo } from '@/GraphQL/types/UserInfo'
 
 export interface Profile {
   login: string

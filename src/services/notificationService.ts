@@ -1,5 +1,5 @@
-import { addNotification } from 'src/stores/notifications'
-import type { NotificationConfig } from 'src/types/notification'
+import { addNotification } from '@/stores/notifications'
+import type { NotificationConfig } from '@/types/notification'
 
 export function notify(
   config: { title: NotificationConfig['title'] } & Partial<NotificationConfig>,

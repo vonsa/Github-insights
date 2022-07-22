@@ -1,6 +1,6 @@
+import { writable } from 'svelte/store'
 import produce from 'immer'
 import { log } from 'src/debugging/logger'
-import { writable } from 'svelte/store'
 import type { Profile } from 'src/types/profiles-types'
 
 interface Profiles {

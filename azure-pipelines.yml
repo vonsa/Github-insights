@@ -11,7 +11,7 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '14.2.0'
+    versionSpec: '16.15.0'
   displayName: 'Install Node.js'
 
 - task: DownloadSecureFile@1
@@ -23,6 +23,13 @@ steps:
     SourceFolder: $(Agent.TempDirectory)
     Contents: '**\.env'
     TargetFolder: $(Build.SourcesDirectory)
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      New-Item $(Build.SourcesDirectory)\.env.production
+      Set-Content $(Build.SourcesDirectory)\.env.production 'VITE_VERSION=$(Build.BuildNumber)'
 
 - script: |
     npm install
