@@ -17,4 +17,8 @@ module.exports = {
   },
   moduleFileExtensions: ['js', 'ts', 'svelte'],
   transformIgnorePatterns: ['node_modules/(?!(svelte-spa-router|svelte-i18n)/)'],
+  setupFiles: ['./src/__mocks__/config.ts'], // mask import.meta behind a mock (it's not well supported)
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1', // resolve '@/' to 'src/' as tsconfig does
+  },
 }

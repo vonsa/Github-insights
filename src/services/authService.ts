@@ -18,6 +18,7 @@ import type { Viewer } from '@/GraphQL/types/Viewer'
 import { QUERY_LOGGED_IN_USERNAME } from '@/GraphQL/Queries/User/user-queries'
 import { filterNullish } from '@/util/filter'
 import { notify } from './notificationService'
+import { APP_CONFIG } from '@/config'
 
 /*
   See web authentication flow:
@@ -97,7 +98,7 @@ function logout() {
 
 function getTokenAndLoginDetails(code: string) {
   axios
-    .get(`${import.meta.env.VITE_GATEKEEPER_URL}${code}`)
+    .get(`${APP_CONFIG.VITE_GATEKEEPER_URL}${code}`)
     .then((response) => {
       if (response.data.error) {
         throw new Error('Could not authenticate')
@@ -123,9 +124,7 @@ function removeCodeFromQs([token, querystring]: [string | null, string | undefin
 }
 
 function toGithub(redirectUrl: string) {
-  window.location.href = `https://github.com/login/oauth/authorize?client_id=${
-    import.meta.env.VITE_CLIENT_ID
-  }&type=user_agent&redirect_url=${redirectUrl}`
+  window.location.href = `https://github.com/login/oauth/authorize?client_id=${APP_CONFIG.VITE_CLIENT_ID}&type=user_agent&redirect_url=${redirectUrl}`
 }
 
 export { token$, login$, promptLogin$, waiting$, login, logout }

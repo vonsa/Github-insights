@@ -11,6 +11,7 @@
   import Navbar from './Components/UI/Navbar.svelte'
   import Authentication from './Components/Hoc/Authentication.svelte'
   import Analytics from './Components/Smart/Analytics.svelte'
+  import { APP_CONFIG } from './config'
 </script>
 
 <svelte:head>
@@ -24,7 +25,7 @@
   />
 </svelte:head>
 
-{#if import.meta.env.PROD}
+{#if APP_CONFIG.PROD}
   <Analytics />
 {/if}
 <AutoRedirect>
