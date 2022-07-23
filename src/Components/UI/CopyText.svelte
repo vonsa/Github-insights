@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import MaskedIcon from './Decoration/MaskedIcon.svelte'
+  import MaskedIcon from '../Decoration/MaskedIcon.svelte'
 
   export let text: string
 

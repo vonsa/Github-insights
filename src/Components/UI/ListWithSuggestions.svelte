@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-  import { showTooltip } from 'src/libs/tooltip/tooltip'
+  import { showTooltip } from '@/libs/tooltip/tooltip'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import DynamicList from '../Hoc/DynamicList.svelte'
 

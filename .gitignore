@@ -1,9 +1,8 @@
 /node_modules/
 /public/build/
 /src/trash
-.env
-.env.local
-.env.production
-package-lock.json
+.env*
+!.env.example
+dist/
 
 .DS_Store

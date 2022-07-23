@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import type { Icon } from 'src/assets/icons'
+  import type { Icon } from '@/assets/icons'
 
   interface RankedItem {
     label: string

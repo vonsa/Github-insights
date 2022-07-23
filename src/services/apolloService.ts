@@ -10,7 +10,7 @@ import {
   OperationVariables,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { logout, promptLogin$, token$ } from 'src/services/authService'
+import { logout, promptLogin$, token$ } from '@/services/authService'
 
 const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql', fetch })
 

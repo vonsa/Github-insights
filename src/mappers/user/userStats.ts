@@ -2,8 +2,8 @@ import type {
   User_user,
   User_user_contributionsCollection,
   User_user_repositoriesStats,
-} from 'src/GraphQL/types/User'
-import type { Profile } from 'src/types/profiles-types'
+} from '@/GraphQL/types/User'
+import type { Profile } from '@/types/profiles-types'
 
 export function userStatsMapper<T extends Partial<User_user>>({
   followers,

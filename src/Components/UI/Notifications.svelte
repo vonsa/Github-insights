@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fly } from 'svelte/transition'
-  import { notifications$ } from 'src/stores/notifications'
+  import { notifications$ } from '@/stores/notifications'
   import { flip } from 'svelte/animate'
   import { onDestroy } from 'svelte'
   import Notification from './Notification.svelte'

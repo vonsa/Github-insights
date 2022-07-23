@@ -1,8 +1,8 @@
-import { log } from 'src/debugging/logger'
-import { mapUserToProfile } from 'src/mappers/user/user'
-import { profiles$, updateProfile } from 'src/stores/profiles'
-import type { Profile, ProfileFromKeys, ProfileKey } from 'src/types/profiles-types'
 import { get } from 'svelte/store'
+import { log } from '@/debugging/logger'
+import { mapUserToProfile } from '@/mappers/user/user'
+import { profiles$, updateProfile } from '@/stores/profiles'
+import type { Profile, ProfileFromKeys, ProfileKey } from '@/types/profiles-types'
 import { fetchUser, toQueryVariables } from './queryService'
 
 interface getUserValuesOptions {

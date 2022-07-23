@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import type { NotificationConfig } from 'src/types/notification'
+  import type { NotificationConfig } from '@/types/notification'
 
   export let title: string
   export let x: number
