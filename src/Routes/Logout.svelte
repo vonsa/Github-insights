@@ -1,6 +1,6 @@
 <script lang="ts">
   import Route from '../Components/Hoc/Route.svelte'
-  import { logout } from 'src/services/authService'
+  import { logout } from '@/services/authService'
 
   logout()
 </script>

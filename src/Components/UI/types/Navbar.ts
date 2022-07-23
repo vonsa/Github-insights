@@ -1,4 +1,4 @@
-import type { Icon } from 'src/assets/icons'
+import type { Icon } from '@/assets/icons'
 
 export interface NavbarItem {
   label: string

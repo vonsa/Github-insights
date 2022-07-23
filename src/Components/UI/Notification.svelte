@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { NotificationConfig } from 'src/types/notification'
-  import { getGlobalVariable } from 'src/util/css'
+  import type { NotificationConfig } from '@/types/notification'
+  import { getGlobalVariable } from '@/util/css'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
 
   export let type: NotificationConfig['type']

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { query } from 'src/services/apolloService'
-  import { watchParam } from 'src/stores/searchParams'
-  import { queries } from 'src/GraphQL/Queries/index'
+  import { query } from '@/services/apolloService'
+  import { watchParam } from '@/stores/searchParams'
+  import { queries } from '@/GraphQL/Queries/index'
   import { combineLatest } from 'rxjs'
   import CenteredSpinner from '../UI/CenteredSpinner.svelte'
 

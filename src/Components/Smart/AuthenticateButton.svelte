@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { login } from 'src/services/authService'
-  import { getBaseUrl } from 'src/util/url'
+  import { login } from '@/services/authService'
+  import { getBaseUrl } from '@/util/url'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
 
   export let redirectUrl = getBaseUrl()

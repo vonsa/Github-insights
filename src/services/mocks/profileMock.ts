@@ -1,4 +1,4 @@
-import type { Profile } from 'src/types/profiles-types'
+import type { Profile } from '@/types/profiles-types'
 
 export const mockProfile: Profile = {
   login: 'vonsa',

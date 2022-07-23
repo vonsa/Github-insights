@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Icon } from 'src/assets/icons'
-  import { getGlobalVariable } from 'src/util/css'
+  import type { Icon } from '@/assets/icons'
+  import { getGlobalVariable } from '@/util/css'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
 
   export let label: string

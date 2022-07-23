@@ -12,7 +12,7 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '14.2.0'
+    versionSpec: '16.15.0'
   displayName: 'Install Node.js'
 
 - task: DownloadSecureFile@1
@@ -25,17 +25,23 @@ steps:
     Contents: '**\.env'
     TargetFolder: $(Build.SourcesDirectory)
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      New-Item $(Build.SourcesDirectory)\.env.production
+      Set-Content $(Build.SourcesDirectory)\.env.production 'VITE_VERSION=$(Build.BuildNumber)'
+
 - script: |
     npm install
     npm run test:all
     npm run build
-    VERSION=$(Build.buildnumber) npm run build
     VERSION=$(Build.buildnumber) npm run sentry:upload:sourcemaps
   displayName: 'Run tests, build for release and upload sourcemaps to Sentry'
 
 - task: CopyFiles@2
   inputs:
-    Contents: 'public/**'
+    Contents: 'dist/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1

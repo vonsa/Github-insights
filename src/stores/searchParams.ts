@@ -2,7 +2,7 @@ import qs from 'qs'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { filter, map, shareReplay } from 'rxjs/operators'
 import { querystring } from 'svelte-spa-router'
-import { getUrlWithoutParam } from 'src/util/url'
+import { getUrlWithoutParam } from '@/util/url'
 
 export const querystring$ = new BehaviorSubject<string | undefined>(window.location.search)
 

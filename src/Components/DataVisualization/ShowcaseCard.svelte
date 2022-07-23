@@ -9,8 +9,8 @@
 </script>
 
 <script lang="ts">
-  import type { Icon } from 'src/assets/icons'
-  import { icons } from 'src/assets/icons'
+  import type { Icon } from '@/assets/icons'
+  import { icons } from '@/assets/icons'
   import MaskedIcon from '../Decoration/MaskedIcon.svelte'
   import Image from '../Decoration/Image.svelte'
   import IconButton from '../UI/IconButton.svelte'

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { login, token$ } from 'src/services/authService'
+  import { login, token$ } from '@/services/authService'
   import Route from '../Components/Hoc/Route.svelte'
   import Button from '../Components/UI/Button.svelte'
-  import { getBaseUrl } from 'src/util/url'
-  import { push } from 'src/services/navigationService'
+  import { getBaseUrl } from '@/util/url'
+  import { push } from '@/services/navigationService'
 </script>
 
 <Route>

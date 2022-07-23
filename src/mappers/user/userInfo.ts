@@ -1,5 +1,5 @@
-import type { User_user } from 'src/GraphQL/types/User'
-import type { Profile } from 'src/types/profiles-types'
+import type { User_user } from '@/GraphQL/types/User'
+import type { Profile } from '@/types/profiles-types'
 
 export function userInfoMapper({
   name,

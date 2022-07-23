@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { waiting$ } from 'src/services/authService'
+  import { waiting$ } from '@/services/authService'
   import LoadingOverlay from '../Decoration/LoadingOverlay.svelte'
   import SpinnerModal from '../UI/SpinnerModal.svelte'
 </script>
